@@ -20,4 +20,6 @@ public:
 	void Draw() override;
 
 	void CheckPlayersCollisions(Player _player);
+	void CalculateBombExplosions(Player _player);
+	void InitBomb(Player _player);
 };

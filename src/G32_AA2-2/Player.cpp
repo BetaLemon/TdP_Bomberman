@@ -18,65 +18,74 @@ void Player::setPlayerState(SDL_Event e) {
 		switch (e.key.keysym.sym) {
 			case SDLK_w:
 				state = UP;
+				facing = UP;
 				break;
 			case SDLK_s:
 				state = DOWN;
+				facing = DOWN;
 				break;
 			case SDLK_a:
 				state = LEFT;
+				facing = LEFT;
 				break;
 			case SDLK_d:
 				state = RIGHT;
+				facing = RIGHT;
 				break;
-			//case bomb
+			case SDLK_SPACE:
+				state = BOMB;
+				break;
 		}
 	}
 	//controles jugador2
 	else if (id == 1) {
 		switch (e.key.keysym.sym) {
-		case SDLK_i:
+		case SDLK_UP:
 			state = UP;
+			facing = UP;
 			break;
-		case SDLK_k:
+		case SDLK_DOWN:
 			state = DOWN;
+			facing = DOWN;
 			break;
-		case SDLK_j:
+		case SDLK_LEFT:
 			state = LEFT;
+			facing = LEFT;
 			break;
-		case SDLK_l:
+		case SDLK_RIGHT:
 			state = RIGHT;
+			facing = RIGHT;
+			break;
+		case SDLK_RCTRL:
+			state = BOMB;
 			break;
 		}
 	}
 }
 
+
+
 void Player::Update() {
 	//Mover el Personaje e instanciar las bombas
 	switch (state) {
 		case UP:
-			position =  Point(position.x, position.y - 1);
+			position =  Point(position.x, position.y - 1 * velocity);
 			state = NONE;
 			break;
 		case DOWN:
-			position = Point(position.x, position.y + 1);
+			position = Point(position.x, position.y + 1 * velocity);
 			state = NONE;
 			break;
 		case LEFT:
-			position = Point(position.x - 1, position.y);
+			position = Point(position.x - 1*velocity, position.y);
 			state = NONE;
 			break;
 		case RIGHT:
-			position = Point(position.x + 1, position.y);
+			position = Point(position.x + 1*velocity, position.y);
 			state = NONE;
 			break;
-		case BOMB:
-			break;
-			//Create a bomb;
+			
 	}
 	//Comprobar objetos
-
-}
-
-void Player::Draw() {
 
 }

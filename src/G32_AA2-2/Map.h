@@ -1,15 +1,19 @@
 #pragma once
 #include <vector>
+#include "Point.h"
+
+using namespace std;
 
 enum Celltype {RIGID,BREAKEABLR,SKATES,HELMET,FLOOR};
 struct Cell {
 	//Sprite
 	Celltype type;
+	Point pos;
 };
 
 class Map {
 private:
-	std::vector<std::vector<Cell>> grid;
+	vector<vector<Cell>> grid;
 public:
 	//blockSprites ??
 	Map();
