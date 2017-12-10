@@ -2,7 +2,7 @@
 
 #include "Scene.h"
 
-class Ranking : Scene {	// !!! Herencia de classes
+class Ranking : public Scene {
 private:
 	//records;
 	//mode;

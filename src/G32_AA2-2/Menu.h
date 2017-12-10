@@ -2,7 +2,7 @@
 
 #include "Scene.h"
 
-class Menu : Scene {	// !!! Herencia de classes!
+class Menu : public Scene {
 private:
 	//buttons[5]
 public:

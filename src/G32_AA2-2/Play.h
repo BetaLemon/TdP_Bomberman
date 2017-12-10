@@ -4,7 +4,7 @@
 #include "Map.h"
 #include "Player.h"
 
-class Play : Scene {	// !!! Falta mirar qué tipo de herencia de clases queremos (public, private, protected)
+class Play : public Scene {
 private:
 	Player player1;
 	Player player2;
