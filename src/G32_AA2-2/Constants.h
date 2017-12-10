@@ -11,7 +11,10 @@ const std::string PLAY_BG = "PLAY_BG";
 const std::string PLAY_GOLD = "PLAY_GOLD";
 const std::string PLAYER_SPRITE = "PLAYER_SPRITE";
 const std::string PLAY_TEXT_SCORE_PLAYER1 = "PLAY_TEXT_SCORE_PLAYER1";
-const std::string MENU_TEXT_BUTTON_PLAY = "MENU_TEXT_BUTTON_PLAY";
+
+const std::string MENU_TEXT_BUTTON_PLAY1 = "MENU_TEXT_BUTTON_PLAY1";
+const std::string MENU_TEXT_BUTTON_PLAY2 = "MENU_TEXT_BUTTON_PLAY2";
+const std::string MENU_TEXT_BUTTON_RANK = "MENU_TEXT_BUTTON_RANK";
 const std::string MENU_TEXT_BUTTON_EXIT = "MENU_TEXT_BUTTON_EXIT";
 
 ///

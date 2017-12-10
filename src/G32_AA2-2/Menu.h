@@ -2,9 +2,15 @@
 
 #include "Scene.h"
 
+struct Button {
+	Text text;
+	int x, y;
+};
+
 class Menu : public Scene {
 private:
-	//buttons[5]
+	Button play1Butt, play2Butt, exitButt, rankButt;
+	Rect mouseDown;
 public:
 	Menu();
 	~Menu();

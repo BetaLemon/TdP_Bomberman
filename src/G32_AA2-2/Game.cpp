@@ -54,4 +54,5 @@ void Game::Run() {
 		default:;
 		}
 	}
+	exit(0);
 }
