@@ -11,6 +11,10 @@ Play::Play(int level) {
 	}
 }
 
+Play::~Play() {
+
+}
+
 void Play::EventsHandler() {
 	SDL_Event event;
 	if (event.type = SDL_KEYDOWN) {
@@ -43,4 +47,8 @@ void Play::CheckPlayersCollisions(Player _player) {
 				_player.setPlayerStateToNONE();
 			break;
 	}
+}
+
+void Play::Draw() {
+
 }

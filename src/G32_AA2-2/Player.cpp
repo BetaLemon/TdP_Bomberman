@@ -6,6 +6,10 @@ Player::Player(int _id, Point _pos) {
 	position = _pos;
 }
 
+Player::~Player() {
+
+}
+
 //Cambiar el state del player segun un imput recivido
 void Player::setPlayerState(SDL_Event e) {
 	
@@ -66,8 +70,13 @@ void Player::Update() {
 			state = NONE;
 			break;
 		case BOMB:
+			break;
 			//Create a bomb;
 	}
 	//Comprobar objetos
+
+}
+
+void Player::Draw() {
 
 }
