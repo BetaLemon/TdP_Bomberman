@@ -18,4 +18,6 @@ public:
 	void EventsHandler() override;
 	void Update() override;
 	void Draw() override;
+
+	void CheckPlayersCollisions(Player _player);
 };
