@@ -10,7 +10,10 @@
 
 	using Color = struct Color { Uint8 r; Uint8 g; Uint8 b; Uint8 a; };
 	
-	struct Vector2 { int x; int y; };
+	struct Vector2 {
+		int x; int y;
+		Vector2(int valueX = 0.0f, int valueY = 0.0f) : x{ valueX }, y{ valueY } {}
+	};
 
 	using Font = struct {
 		std::string id;

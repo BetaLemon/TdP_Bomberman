@@ -1,17 +1,17 @@
 #pragma once
-#include "Point.h"
+#include "Types.h"
 
 enum BombState{ACTIVE,DESACTIVE};
 
 class Bomb {
 	private:
-		Point pos;
+		Vector2 pos;
 		BombState state;
 		float timer;
 		//sprite
 	public:
 		Bomb();
-		void Init(Point pos);
+		void Init(Vector2 pos);
 		void Update();
 		void Draw();
 		float getTimer() { return timer; }

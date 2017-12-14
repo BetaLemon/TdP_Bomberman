@@ -13,6 +13,7 @@ private:
 	//pointsFont
 	//lifeSprite
 public:
+	Play();
 	Play(int level);
 	~Play();
 	void EventsHandler() override;

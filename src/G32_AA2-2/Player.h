@@ -1,9 +1,9 @@
 #pragma once
 #include <vector>
-#include <SDL.h>
-#include "Point.h"
+#include "Types.h"
+#include "Types.h"
 #include "Bomb.h"
-using namespace std;
+#include "Renderer.h"
 
 enum PlayerState{UP,DOWN,LEFT,RIGHT,BOMB,NONE};
 //Struct used to store the position of the player
@@ -15,9 +15,9 @@ private:
 	int points;
 	int life;
 	PlayerState state = NONE;
-	Point position;
-	float width, height;
-	float velocity = 5;
+	Vector2 position;
+	int width, height;
+	int velocity = 5;
 	Bomb bomb;
 	PlayerState facing;
 	//position
@@ -26,13 +26,13 @@ private:
 public:
 	
 	Player();
-	Player(int id,Point pos);
+	Player(int id,Vector2 pos);
 	~Player();
 	void setPlayerState(SDL_Event e);
 	void setPlayerStateToNONE() { state = NONE; }
 	PlayerState getPlayerState() { return state; }
 	PlayerState getPlayerFacing() { return facing; }
-	Point getPosition() { return position; }
+	Vector2 getPosition() { return position; }
 	SDL_Rect getCollider() {
 		SDL_Rect coll = { position.x,position.y,width,height };
 		return coll;

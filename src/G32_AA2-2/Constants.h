@@ -3,13 +3,25 @@
 #define SCREEN_FPS 60.0f
 #define SCREEN_TICKS_PER_FRAME (1.0f / SCREEN_FPS)
 
-#define SCREEN_WIDTH 800
-#define SCREEN_HEIGHT 600
+#define SCREEN_WIDTH 720
+#define SCREEN_HEIGHT 704
+
+#define HUD_WIDTH 624
+#define HUD_HEIGHT 80
+
+#define GRID_WIDTH 15
+#define GRID_HEIGHT 13
+
+#define CELL_WIDTH 48
+#define CELL_HEIGHT 48
+
+#define PLAYER_WIDTH 48
+#define PLAYER_HEIGHT 48
 
 const std::string MENU_BG = "MENU_BG";
 const std::string PLAY_BG = "PLAY_BG";
-const std::string PLAY_GOLD = "PLAY_GOLD";
 const std::string PLAYER_SPRITE = "PLAYER_SPRITE";
+const std::string PLAY_CELL_SPRITE = "PLAY_CELL_SPRITE";
 const std::string PLAY_TEXT_SCORE_PLAYER1 = "PLAY_TEXT_SCORE_PLAYER1";
 
 const std::string MENU_TEXT_BUTTON_PLAY1 = "MENU_TEXT_BUTTON_PLAY1";
@@ -24,5 +36,6 @@ const std::string MENU_FONT = "MENU_FONT";
 const std::string PATH_IMG = "../../res/img/";
 const std::string PATH_FONT = "../../res/ttf/";
 const std::string PATH_AU = "../../res/au/";
+const std::string PATH_FILES = "../../res/files/";
 
 

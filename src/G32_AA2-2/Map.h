@@ -1,22 +1,25 @@
 #pragma once
-#include <vector>
-#include "Point.h"
+#include <vector>	// Aún hace falta??
+#include "Constants.h"
+#include "Types.h"
 
 using namespace std;
 
-enum Celltype {RIGID,BREAKEABLR,SKATES,HELMET,FLOOR};
+enum Celltype {FIXED,DESTRUCTIBLE,SKATES,HELMET,FLOOR};
 struct Cell {
 	//Sprite
 	Celltype type;
-	Point pos;
+	Vector2 pos;
 };
 
 class Map {
 private:
-	vector<vector<Cell>> grid;
+	//vector<vector<Cell>> grid;
+	Cell grid[GRID_WIDTH][GRID_HEIGHT];
 public:
 	//blockSprites ??
 	Map();
+	Map(int level);
 	~Map();
 	void Update();
 	void Draw();

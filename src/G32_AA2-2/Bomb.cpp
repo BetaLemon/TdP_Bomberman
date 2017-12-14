@@ -5,7 +5,7 @@ Bomb::Bomb() {
 	state = DESACTIVE;
 }
 
-void Bomb::Init(Point _pos) {
+void Bomb::Init(Vector2 _pos) {
 	pos = _pos;
 	timer = 0.0f;
 	state = ACTIVE;

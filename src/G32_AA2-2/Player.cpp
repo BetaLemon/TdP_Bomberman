@@ -1,13 +1,23 @@
 #include "Player.h"
 
 Player::Player() {};
-Player::Player(int _id, Point _pos) {
+Player::Player(int _id, Vector2 _pos) {
 	id = _id;
 	position = _pos;
 }
 
 Player::~Player() {
 
+}
+
+void Player::Draw() {
+	Renderer::Instance()->Clear();
+	Renderer::Instance()->LoadTexture(PLAYER_SPRITE, PATH_IMG + "player1.png");
+	Vector2 spriteSize = Renderer::Instance()->GetTextureSize(PLAYER_SPRITE);
+	spriteSize.x /= 3;
+	spriteSize.y /= 4;
+	Renderer::Instance()->PushSprite(PLAYER_SPRITE, { 0,0,spriteSize.x,spriteSize.y }, { position.x, position.y, PLAYER_WIDTH, PLAYER_HEIGHT });
+	Renderer::Instance()->Render();
 }
 
 //Cambiar el state del player segun un imput recivido
@@ -69,19 +79,19 @@ void Player::Update() {
 	//Mover el Personaje e instanciar las bombas
 	switch (state) {
 		case UP:
-			position =  Point(position.x, position.y - 1 * velocity);
+			position = Vector2(position.x, position.y - 1 * velocity);
 			state = NONE;
 			break;
 		case DOWN:
-			position = Point(position.x, position.y + 1 * velocity);
+			position = Vector2(position.x, position.y + 1 * velocity);
 			state = NONE;
 			break;
 		case LEFT:
-			position = Point(position.x - 1*velocity, position.y);
+			position = Vector2(position.x - 1*velocity, position.y);
 			state = NONE;
 			break;
 		case RIGHT:
-			position = Point(position.x + 1*velocity, position.y);
+			position = Vector2(position.x + 1*velocity, position.y);
 			state = NONE;
 			break;
 			

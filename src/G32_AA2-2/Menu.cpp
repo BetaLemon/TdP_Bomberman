@@ -93,7 +93,7 @@ void Menu::Update() {
 void Menu::Draw() {
 
 	Renderer::Instance()->Clear();
-	Renderer::Instance()->LoadFont({ MENU_FONT, PATH_FONT + "Bomberman.ttf", 50 });
+	Renderer::Instance()->LoadFont({ MENU_FONT, PATH_FONT + "game_over.ttf", 100 });
 
 	// PLAY 1 BUTTON:
 	Renderer::Instance()->LoadTextureText(MENU_FONT, play1Butt.text);
