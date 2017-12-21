@@ -8,6 +8,8 @@ Play::Play() {
 Play::Play(int level) {
 	sceneState = SceneState::RUNNING;
 	map = Map(level);
+	player1 = Player(0, {576,120});
+	player2 = Player(1, { 576,200});
 }
 
 Play::~Play() {
@@ -40,26 +42,12 @@ void Play::Draw() {
 	Renderer::Instance()->PushImage(PLAY_BG, { 0,0,SCREEN_WIDTH, SCREEN_HEIGHT });
 
 	// Tiles:
-	Renderer::Instance()->LoadTexture(PLAY_CELL_SPRITE, PATH_IMG + "items.png");
-	Vector2 spriteSize = Renderer::Instance()->GetTextureSize(PLAY_CELL_SPRITE);
-	spriteSize.x /= 3;
-	spriteSize.y /= 2;
-	for (int i = 0; i < GRID_WIDTH; i++) {
-		for (int j = 0; j < GRID_HEIGHT; j++) {
-			switch (map.getCell(i, j).type) {
-			case Celltype::FLOOR:
-				// empty sprite.
-				break;
-			case Celltype::FIXED:
-				Renderer::Instance()->PushSprite(PLAY_CELL_SPRITE, { 0,0,spriteSize.x,spriteSize.y }, { i*CELL_WIDTH, j*CELL_HEIGHT + HUD_HEIGHT, CELL_WIDTH, CELL_HEIGHT });
-				break;
-			case Celltype::DESTRUCTIBLE:
-				Renderer::Instance()->PushSprite(PLAY_CELL_SPRITE, { 1 * spriteSize.x, 0,spriteSize.x,spriteSize.y }, { i*CELL_WIDTH, j*CELL_HEIGHT + HUD_HEIGHT, CELL_WIDTH, CELL_HEIGHT });
-				break;
-			default:;
-			}
-		}
-	}
+	map.Map::Draw();
+
+	// Player:
+	player1.Player::Draw();
+	player2.Player::Draw();
+
 	Renderer::Instance()->Render();
 }
 

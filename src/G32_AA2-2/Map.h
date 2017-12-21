@@ -2,6 +2,7 @@
 #include <vector>	// Aún hace falta??
 #include "Constants.h"
 #include "Types.h"
+#include "Renderer.h"
 
 using namespace std;
 

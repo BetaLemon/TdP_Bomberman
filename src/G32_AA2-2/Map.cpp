@@ -87,3 +87,26 @@ Map::Map(int level) {
 Map::~Map() {
 
 }
+
+void Map::Draw() {
+	Renderer::Instance()->LoadTexture(PLAY_CELL_SPRITE, PATH_IMG + "items.png");
+	Vector2 spriteSize = Renderer::Instance()->GetTextureSize(PLAY_CELL_SPRITE);
+	spriteSize.x /= 3;
+	spriteSize.y /= 2;
+	for (int i = 0; i < GRID_WIDTH; i++) {
+		for (int j = 0; j < GRID_HEIGHT; j++) {
+			switch (getCell(i, j).type) {
+			case Celltype::FLOOR:
+				// empty sprite.
+				break;
+			case Celltype::FIXED:
+				Renderer::Instance()->PushSprite(PLAY_CELL_SPRITE, { 0,0,spriteSize.x,spriteSize.y }, { i*CELL_WIDTH, j*CELL_HEIGHT + HUD_HEIGHT, CELL_WIDTH, CELL_HEIGHT });
+				break;
+			case Celltype::DESTRUCTIBLE:
+				Renderer::Instance()->PushSprite(PLAY_CELL_SPRITE, { 1 * spriteSize.x, 0,spriteSize.x,spriteSize.y }, { i*CELL_WIDTH, j*CELL_HEIGHT + HUD_HEIGHT, CELL_WIDTH, CELL_HEIGHT });
+				break;
+			default:;
+			}
+		}
+	}
+}

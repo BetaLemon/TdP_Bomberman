@@ -4,6 +4,15 @@ Player::Player() {};
 Player::Player(int _id, Vector2 _pos) {
 	id = _id;
 	position = _pos;
+
+	switch (id) {
+	case 0:
+		Renderer::Instance()->LoadTexture(PLAYER1_SPRITE, PATH_IMG + "player1.png");
+		break;
+	case 1:
+		Renderer::Instance()->LoadTexture(PLAYER2_SPRITE, PATH_IMG + "player2.png");
+		break;
+	}
 }
 
 Player::~Player() {
@@ -11,16 +20,29 @@ Player::~Player() {
 }
 
 void Player::Draw() {
-	Renderer::Instance()->Clear();
-	Renderer::Instance()->LoadTexture(PLAYER_SPRITE, PATH_IMG + "player1.png");
-	Vector2 spriteSize = Renderer::Instance()->GetTextureSize(PLAYER_SPRITE);
-	spriteSize.x /= 3;
-	spriteSize.y /= 4;
-	Renderer::Instance()->PushSprite(PLAYER_SPRITE, { 0,0,spriteSize.x,spriteSize.y }, { position.x, position.y, PLAYER_WIDTH, PLAYER_HEIGHT });
-	Renderer::Instance()->Render();
+	Vector2 spriteSize;
+	switch (id) {
+	case 0:
+		//Renderer::Instance()->Clear();
+		spriteSize = Renderer::Instance()->GetTextureSize(PLAYER1_SPRITE);
+		spriteSize.x /= 3;
+		spriteSize.y /= 4;
+		Renderer::Instance()->PushSprite(PLAYER1_SPRITE, { 0,0,spriteSize.x,spriteSize.y }, { position.x, position.y, PLAYER_WIDTH, PLAYER_HEIGHT });
+		//Renderer::Instance()->Render();
+		break;
+	case 1:
+		//Renderer::Instance()->Clear();
+		spriteSize = Renderer::Instance()->GetTextureSize(PLAYER2_SPRITE);
+		spriteSize.x /= 3;
+		spriteSize.y /= 4;
+		Renderer::Instance()->PushSprite(PLAYER2_SPRITE, { 0,0,spriteSize.x,spriteSize.y }, { position.x, position.y, PLAYER_WIDTH, PLAYER_HEIGHT });
+		//Renderer::Instance()->Render();
+		break;
+	}
+	
 }
 
-//Cambiar el state del player segun un imput recivido
+//Cambiar el state del player segun un input recibido
 void Player::setPlayerState(SDL_Event e) {
 	
 	//controles jugador1
