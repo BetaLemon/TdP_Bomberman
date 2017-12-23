@@ -3,6 +3,7 @@
 #include "Scene.h"
 #include "Map.h"
 #include "Player.h"
+//#include "Collisions.h"
 
 class Play : public Scene {
 private:
@@ -19,7 +20,7 @@ public:
 	void EventsHandler() override;
 	void Update() override;
 	void Draw() override;
-
+	bool Collision(Rect _player, Rect other);
 	void CheckPlayersCollisions(Player _player);
 	void CalculateBombExplosions(Player _player);
 	void InitBomb(Player _player);

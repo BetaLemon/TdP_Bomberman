@@ -1,13 +1,11 @@
 #pragma once
 #include <vector>
 #include "Types.h"
-#include "Types.h"
 #include "Bomb.h"
 #include "Renderer.h"
 
 enum PlayerState{UP,DOWN,LEFT,RIGHT,BOMB,NONE};
 //Struct used to store the position of the player
-
 
 class Player {
 private:
@@ -20,9 +18,7 @@ private:
 	int velocity = 5;
 	Bomb bomb;
 	PlayerState facing;
-	//position
-	//powerUp
-	//sprite
+	CanMove canMove;
 public:
 	
 	Player();
@@ -37,6 +33,10 @@ public:
 		SDL_Rect coll = { position.x,position.y,width,height };
 		return coll;
 	}
+
+	Vector2 getGridPos();
+	CanMove getCanMove();
+	void setCanMove(CanMove newCanMove);
 
 	Bomb getBomb() { return bomb; }
 		

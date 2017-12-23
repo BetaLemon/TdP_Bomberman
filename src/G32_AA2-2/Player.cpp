@@ -27,7 +27,7 @@ void Player::Draw() {
 		spriteSize = Renderer::Instance()->GetTextureSize(PLAYER1_SPRITE);
 		spriteSize.x /= 3;
 		spriteSize.y /= 4;
-		Renderer::Instance()->PushSprite(PLAYER1_SPRITE, { 0,0,spriteSize.x,spriteSize.y }, { position.x, position.y, PLAYER_WIDTH, PLAYER_HEIGHT });
+		Renderer::Instance()->PushSprite(PLAYER1_SPRITE, { 0,0,spriteSize.x,spriteSize.y }, { (position.x - PLAYER_WIDTH/2), (position.y - PLAYER_HEIGHT/2), PLAYER_WIDTH, PLAYER_HEIGHT });
 		//Renderer::Instance()->Render();
 		break;
 	case 1:
@@ -127,29 +127,46 @@ void Player::setPlayerState(SDL_Event e,const Uint8 *array) {
 	}
 }
 
-
+Vector2 Player::getGridPos() {
+	Vector2 tmp;
+	tmp.x = floor(position.x / CELL_WIDTH);
+	tmp.y = floor((position.y - HUD_HEIGHT) / CELL_HEIGHT);
+	return tmp;
+}
 
 void Player::Update() {
 	//Mover el Personaje e instanciar las bombas
 	switch (state) {
 		case UP:
-			position = Vector2(position.x, position.y - 1 * velocity);
-			state = NONE;
+			if (canMove.up) {
+				position = Vector2(position.x, position.y - 1 * velocity);
+				state = NONE;
+			}
 			break;
 		case DOWN:
-			position = Vector2(position.x, position.y + 1 * velocity);
-			state = NONE;
+			if (canMove.down) {
+				position = Vector2(position.x, position.y + 1 * velocity);
+				state = NONE;
+			}
 			break;
 		case LEFT:
-			position = Vector2(position.x - 1*velocity, position.y);
-			state = NONE;
+			if (canMove.left) {
+				position = Vector2(position.x - 1 * velocity, position.y);
+				state = NONE;
+			}
 			break;
 		case RIGHT:
-			position = Vector2(position.x + 1*velocity, position.y);
-			state = NONE;
+			if (canMove.right) {
+				position = Vector2(position.x + 1 * velocity, position.y);
+				state = NONE;
+			}
 			break;
 			
 	}
 	//Comprobar objetos
 
 }
+
+CanMove Player::getCanMove() { return canMove; }
+
+void Player::setCanMove(CanMove newCanMove) { canMove = newCanMove; }

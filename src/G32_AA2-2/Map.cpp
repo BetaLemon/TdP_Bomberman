@@ -82,6 +82,15 @@ Map::Map(int level) {
 		break;
 	default:;
 	}
+
+	for (int i = 0; i < GRID_WIDTH; i++) {
+		for (int j = 0; j < GRID_HEIGHT; j++) {
+			if (grid[i][j].type != Celltype::FIXED && grid[i][j].type != Celltype::DESTRUCTIBLE
+				&& grid[i][j].type != Celltype::SKATES && grid[i][j].type != Celltype::HELMET && grid[i][j].type != Celltype::FLOOR) {
+				grid[i][j] = { Celltype::FLOOR, {i,j} };
+			}
+		}
+	}
 }
 
 Map::~Map() {
