@@ -24,5 +24,5 @@ public:
 	~Map();
 	void Update();
 	void Draw();
-	Cell getCell(int x, int y) { return grid[x][y]; }
+ 	Cell getCell(Vector2 pos) { return grid[pos.x][pos.y]; }
 };

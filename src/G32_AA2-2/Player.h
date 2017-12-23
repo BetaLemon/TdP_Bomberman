@@ -1,24 +1,32 @@
 #pragma once
 #include <vector>
 #include "Types.h"
+#include "Types.h"
 #include "Bomb.h"
 #include "Renderer.h"
 
 enum PlayerState{UP,DOWN,LEFT,RIGHT,BOMB,NONE};
 //Struct used to store the position of the player
 
+
 class Player {
 private:
 	int id; // 0 = player1, 1 = player2
 	int points;
 	int life;
+	int spriteX = 1;
+	int spriteY = 1;
 	PlayerState state = NONE;
 	Vector2 position;
+	Vector2 calculatePosition;
 	int width, height;
 	int velocity = 5;
 	Bomb bomb;
-	PlayerState facing;
 	CanMove canMove;
+	PlayerState facing = LEFT;
+	//position
+	//powerUp
+	//sprite
 public:
 	
 	Player();
@@ -38,6 +46,7 @@ public:
 	CanMove getCanMove();
 	void setCanMove(CanMove newCanMove);
 
+	
 	Bomb getBomb() { return bomb; }
 		
 	//setPowerUp();
