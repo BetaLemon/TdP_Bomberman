@@ -17,9 +17,13 @@ Play::~Play() {
 }
 
 void Play::EventsHandler() {
+	const Uint8 *keyboardArray = SDL_GetKeyboardState(NULL);
 	SDL_Event event;
-	if (event.type = SDL_KEYDOWN) {
-		player1.setPlayerState(event);
+	while (SDL_PollEvent(&event)) {
+		if (event.type = SDL_KEYDOWN) {
+			player1.setPlayerState(event,keyboardArray);
+			player2.setPlayerState(event,keyboardArray);
+		}
 	}
 }
 void Play::Update() {

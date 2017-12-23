@@ -43,35 +43,54 @@ void Player::Draw() {
 }
 
 //Cambiar el state del player segun un input recibido
-void Player::setPlayerState(SDL_Event e) {
+void Player::setPlayerState(SDL_Event e,const Uint8 *array) {
 	
-	//controles jugador1
+	//state = _state;
 	if (id == 0) {
+		/*
 		switch (e.key.keysym.sym) {
-			case SDLK_w:
-				state = UP;
-				facing = UP;
-				break;
-			case SDLK_s:
-				state = DOWN;
-				facing = DOWN;
-				break;
-			case SDLK_a:
-				state = LEFT;
-				facing = LEFT;
-				break;
-			case SDLK_d:
-				state = RIGHT;
-				facing = RIGHT;
-				break;
-			case SDLK_SPACE:
-				state = BOMB;
-				break;
+
+		case SDLK_w:
+			printf("Hola");
+			state = UP;
+			//facing = UP;
+			break;
+		case SDLK_s:
+			state = DOWN;
+			//facing = DOWN;
+			break;
+		case SDLK_a:
+			state = LEFT;
+			//facing = LEFT;
+			break;
+		case SDLK_d:
+			state = RIGHT;
+			//facing = RIGHT;
+			break;
+		case SDLK_SPACE:
+			state = LEFT;
+			break;
+		}
+		*/
+		if (array[SDL_SCANCODE_W]) {
+			state = UP;
+		}
+		if (array[SDL_SCANCODE_S]) {
+			state = DOWN;
+		}
+		if (array[SDL_SCANCODE_A]) {
+			state = LEFT;
+		}
+		if (array[SDL_SCANCODE_D]) {
+			state = RIGHT;
 		}
 	}
 	//controles jugador2
-	else if (id == 1) {
+	
+	 else if (id == 1) {
+		 /*
 		switch (e.key.keysym.sym) {
+			
 		case SDLK_UP:
 			state = UP;
 			facing = UP;
@@ -91,6 +110,19 @@ void Player::setPlayerState(SDL_Event e) {
 		case SDLK_RCTRL:
 			state = BOMB;
 			break;
+		}
+		*/
+		if (array[SDL_SCANCODE_UP]) {
+			state = UP;
+		}
+		if (array[SDL_SCANCODE_DOWN]) {
+			state = DOWN;
+		}
+		if (array[SDL_SCANCODE_LEFT]) {
+			state = LEFT;
+		}
+		if (array[SDL_SCANCODE_RIGHT]) {
+			state = RIGHT;
 		}
 	}
 }

@@ -28,7 +28,7 @@ public:
 	Player();
 	Player(int id,Vector2 pos);
 	~Player();
-	void setPlayerState(SDL_Event e);
+	void setPlayerState(SDL_Event e, const Uint8 *array);
 	void setPlayerStateToNONE() { state = NONE; }
 	PlayerState getPlayerState() { return state; }
 	PlayerState getPlayerFacing() { return facing; }
