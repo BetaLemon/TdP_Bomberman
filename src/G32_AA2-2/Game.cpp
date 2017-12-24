@@ -38,13 +38,13 @@ void Game::Run() {
 		case SceneState::GOTO_RANKING:
 			delete currentScene;
 			currentScene = nullptr;
-			currentScene = new Ranking();
+			currentScene = new Ranking(false);
 			gameState = GameState::RANKING;
 			break;
 		case SceneState::GOTO_SETSCORE:
 			delete currentScene;
 			currentScene = nullptr;
-			currentScene = new Ranking();
+			currentScene = new Ranking(true);
 			gameState = GameState::RANKING;
 			break;
 		case SceneState::EXIT:

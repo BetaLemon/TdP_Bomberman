@@ -1,5 +1,5 @@
 <Game>
-	<Music>0</Music>
+	<Music>1</Music>
 	<Level id="1" time="60" lives="3">
 		<Destructible>
 			<Wall i="2" j="1"/>

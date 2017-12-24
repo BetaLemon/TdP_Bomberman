@@ -49,9 +49,15 @@ void Play::EventsHandler() {
 	const Uint8 *keyboardArray = SDL_GetKeyboardState(NULL);
 	SDL_Event event;
 	while (SDL_PollEvent(&event)) {
-		if (event.type = SDL_KEYDOWN) {
+		if (event.type == SDL_KEYDOWN) {
 			player1.setPlayerState(event,keyboardArray);
 			player2.setPlayerState(event,keyboardArray);
+			if (event.key.keysym.sym == SDLK_ESCAPE) {
+				sceneState = SceneState::GOTO_MENU;
+			}
+			if (event.key.keysym.sym == SDLK_SPACE) {
+				sceneState = SceneState::GOTO_SETSCORE;
+			}
 		}
 	}
 }

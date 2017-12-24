@@ -7,15 +7,11 @@
 #include "rapidxml_utils.hpp"
 #include <sstream>
 
-struct Button {
-	Text text;
-	int x, y;
-};
-
 class Menu : public Scene {
 private:
 	Button play1Butt, play2Butt, exitButt, rankButt, musicButt;
 	Rect mouseDown;
+	bool checkClick(Rect button, int x, int y);
 public:
 	Menu();
 	~Menu();

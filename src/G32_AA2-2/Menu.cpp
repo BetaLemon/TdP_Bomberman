@@ -94,7 +94,7 @@ void Menu::EventsHandler() {
 	}
 }
 
-bool checkClick(Rect button, int x, int y) {
+bool Menu::checkClick(Rect button, int x, int y) {
 	return (x > button.x && x < (button.x + button.w) && y > button.y && y < (button.y + button.h));
 }
 
@@ -156,7 +156,7 @@ void Menu::Draw() {
 	play1Butt.y = (SCREEN_HEIGHT / 2) - (play1Butt.text.h / 2) - 200;
 	Renderer::Instance()->PushImage(MENU_TEXT_BUTTON_PLAY1, { play1Butt.x, play1Butt.y, play1Butt.text.w, play1Butt.text.h });
 
-	Rect tmp;
+//	Rect tmp;
 	// PLAY 2 BUTTON
 	Renderer::Instance()->LoadTextureText(MENU_FONT, play2Butt.text);
 	play2Butt.text.w = Renderer::Instance()->GetTextureSize(MENU_TEXT_BUTTON_PLAY2).x;

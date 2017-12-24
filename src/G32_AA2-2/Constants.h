@@ -35,12 +35,15 @@ const std::string HUD_TEXT_LIFE_PLAYER1 = "HUD_TEXT_LIFE_PLAYER1";
 const std::string HUD_TEXT_LIFE_PLAYER2 = "HUD_TEXT_LIFE_PLAYER2";
 const std::string HUD_TEXT_POINTS_PLAYER1 = "HUD_TEXT_POINTS_PLAYER1";
 const std::string HUD_TEXT_POINTS_PLAYER2 = "HUD_TEXT_POINTS_PLAYER2";
+
+const std::string RANKING_TEXT = "RANKING_TEXT";
 ///
 const std::string MENU_SOUND = "MENU_SOUND";
 const std::string PLAY_SOUND = "PLAY_SOUND";
 
 const std::string MENU_FONT = "MENU_FONT";
 const std::string HUD_FONT = "HUD_FONT";
+const std::string RANKING_FONT = "RANKING_FONT";
 
 const std::string PATH_IMG = "../../res/img/";
 const std::string PATH_FONT = "../../res/ttf/";

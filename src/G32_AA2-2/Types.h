@@ -29,4 +29,9 @@
 		int h;
 	};
 
+	struct Button {
+		Text text;
+		int x, y;
+	};
+
 	enum class Key {UP, DOWN, LEFT, RIGHT, NONE};

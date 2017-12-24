@@ -3,7 +3,7 @@
 #include "Renderer.h"
 #include "Music.h"
 
-enum class SceneState { RUNNING, EXIT, GOTO_PLAY1, GOTO_PLAY2, GOTO_RANKING, GOTO_MENU, GOTO_SETSCORE, TOGGLE_MUSIC };
+enum class SceneState { RUNNING, EXIT, GOTO_PLAY1, GOTO_PLAY2, GOTO_RANKING, GOTO_MENU, GOTO_SETSCORE };
 
 class Scene {
 protected:
