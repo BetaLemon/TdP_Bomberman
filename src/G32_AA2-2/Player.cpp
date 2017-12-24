@@ -14,6 +14,10 @@ Player::Player(int _id, Vector2 _pos) {
 		Renderer::Instance()->LoadTexture(PLAYER2_SPRITE, PATH_IMG + "player2.png");
 		break;
 	}
+
+	points = 0;
+	life = 3;
+	canMove = { false, false, false, false };
 }
 
 Player::~Player() {
@@ -28,7 +32,8 @@ void Player::Draw() {
 		spriteSize = Renderer::Instance()->GetTextureSize(PLAYER1_SPRITE);
 		spriteSize.x /= 3;
 		spriteSize.y /= 4;
-		Renderer::Instance()->PushSprite(PLAYER1_SPRITE, { spriteSize.x*(spriteX/5),spriteSize.y*spriteY,spriteSize.x,spriteSize.y}, { position.x, position.y, PLAYER_WIDTH, PLAYER_HEIGHT });
+		Renderer::Instance()->PushSprite(PLAYER1_SPRITE, { spriteSize.x*(spriteX/5),spriteSize.y*spriteY,spriteSize.x,spriteSize.y},
+			{ position.x - (PLAYER_WIDTH/2), position.y - (PLAYER_HEIGHT/2), PLAYER_WIDTH, PLAYER_HEIGHT });
 		//Renderer::Instance()->Render();
 		
 		break;
@@ -37,7 +42,8 @@ void Player::Draw() {
 		spriteSize = Renderer::Instance()->GetTextureSize(PLAYER2_SPRITE);
 		spriteSize.x /= 3;
 		spriteSize.y /= 4;
-		Renderer::Instance()->PushSprite(PLAYER2_SPRITE, { spriteSize.x*(spriteX/5),spriteSize.y*spriteY,spriteSize.x,spriteSize.y }, { position.x, position.y, PLAYER_WIDTH, PLAYER_HEIGHT });
+		Renderer::Instance()->PushSprite(PLAYER2_SPRITE, { spriteSize.x*(spriteX/5),spriteSize.y*spriteY,spriteSize.x,spriteSize.y },
+			{ position.x - (PLAYER_WIDTH/2), position.y - (PLAYER_HEIGHT/2), PLAYER_WIDTH, PLAYER_HEIGHT });
 		//Renderer::Instance()->Render();
 
 		break;
@@ -110,7 +116,9 @@ void Player::Update() {
 	//Mover el Personaje e instanciar las bombas
 	switch (state) {
 		case UP:
-			position = Vector2(position.x, position.y - 1 * velocity);
+			if (canMove.up) {
+				position = Vector2(position.x, position.y - CELL_HEIGHT);
+			}
 			spriteY = 0;
 			//Hasta 10 para que se reduzca la velocidad
 			if (spriteX == 10) {
@@ -120,7 +128,9 @@ void Player::Update() {
 			state = NONE;
 			break;
 		case DOWN:
-			position = Vector2(position.x, position.y + 1 * velocity);
+			if (canMove.down) {
+				position = Vector2(position.x, position.y + CELL_HEIGHT);
+			}
 			spriteY = 2;
 			if (spriteX == 10) {
 				spriteX = 0;
@@ -129,7 +139,9 @@ void Player::Update() {
 			state = NONE;
 			break;
 		case LEFT:
-			position = Vector2(position.x - 1*velocity, position.y);
+			if (canMove.left) {
+				position = Vector2(position.x - CELL_WIDTH, position.y);
+			}
 			spriteY = 1;
 			if (spriteX == 10) {
 				spriteX = 0;
@@ -138,7 +150,9 @@ void Player::Update() {
 			state = NONE;
 			break;
 		case RIGHT:
-			position = Vector2(position.x + 1*velocity, position.y);
+			if (canMove.right) {
+				position = Vector2(position.x + CELL_WIDTH, position.y);
+			}
 			spriteY = 3;
 			if (spriteX == 10) {
 				spriteX = 0;
@@ -151,6 +165,19 @@ void Player::Update() {
 	//Comprobar objetos
 	calculatePosition = Vector2(position.x + PLAYER_WIDTH / 2,position.y+PLAYER_HEIGHT/2);
 	bomb.Update();
+}
+
+int Player::getPoints() {
+	return points;
+}
+void Player::addPoints(int amount) {
+	points = points + amount;
+}
+
+int Player::getLife() { return life; }
+
+void Player::setCanMove(PlayerMoveAllow cM) {
+	canMove = cM;
 }
 
 

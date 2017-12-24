@@ -25,4 +25,5 @@ public:
 	void Update();
 	void Draw();
  	Cell getCell(Vector2 pos) { return grid[pos.x][pos.y]; }
+	Vector2 getCellPixPos(Vector2 pos);
 };

@@ -54,5 +54,6 @@ void Game::Run() {
 		default:;
 		}
 	}
+	//SDL_Quit();
 	exit(0);
 }

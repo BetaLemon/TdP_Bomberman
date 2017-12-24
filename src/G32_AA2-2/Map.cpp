@@ -104,7 +104,7 @@ void Map::Draw() {
 	spriteSize.y /= 2;
 	for (int i = 0; i < GRID_WIDTH; i++) {
 		for (int j = 0; j < GRID_HEIGHT; j++) {
-			switch (getCell(i, j).type) {
+			switch (getCell({ i, j }).type) {
 			case Celltype::FLOOR:
 				// empty sprite.
 				break;
@@ -118,4 +118,8 @@ void Map::Draw() {
 			}
 		}
 	}
+}
+
+Vector2 Map::getCellPixPos(Vector2 pos) {
+	return { (pos.x * CELL_WIDTH + HUD_HEIGHT) + (CELL_WIDTH/2), (pos.y * CELL_HEIGHT) + (CELL_HEIGHT/2) };
 }

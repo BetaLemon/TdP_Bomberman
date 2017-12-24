@@ -8,6 +8,7 @@
 enum PlayerState{UP,DOWN,LEFT,RIGHT,BOMB,NONE};
 //Struct used to store the position of the player
 
+struct PlayerMoveAllow { bool up, down, left, right; };
 
 class Player {
 private:
@@ -22,9 +23,8 @@ private:
 	int width, height;
 	int velocity = 5;
 	Bomb bomb;
-	CanMove canMove;
 	PlayerState facing = LEFT;
-	//position
+	PlayerMoveAllow canMove;
 	//powerUp
 	//sprite
 public:
@@ -43,15 +43,17 @@ public:
 	}
 
 	Vector2 getGridPos();
-	CanMove getCanMove();
-	void setCanMove(CanMove newCanMove);
+	int getPoints();
+	void addPoints(int amount);
+	int getLife();
 
-	
+	void setCanMove(PlayerMoveAllow cM);
+	PlayerMoveAllow getCanMove() { return canMove; }
+
 	Bomb getBomb() { return bomb; }
 		
 	//setPowerUp();
-	//void setLife(int lf); getLife
-	//setPoints, getPoints
+
 	void Update();
 	void Draw();
 };

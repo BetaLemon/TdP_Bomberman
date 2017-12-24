@@ -1,3 +1,17 @@
-﻿  Play.cpp
+﻿  Scene.cpp
+  Renderer.cpp
+  Ranking.cpp
+  Player.cpp
+c:\users\enti\desktop\tdp_bomberman\src\g32_aa2-2\player.cpp(110): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\users\enti\desktop\tdp_bomberman\src\g32_aa2-2\player.cpp(111): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+  Play.cpp
+  Music.cpp
+  Menu.cpp
+c:\users\enti\desktop\tdp_bomberman\src\g32_aa2-2\menu.cpp(159): warning C4101: 'tmp': unreferenced local variable
+  Map.cpp
+  Main.cpp
+  Game.cpp
+  Bomb.cpp
+  Generating Code...
   G32_AA2-2.vcxproj -> C:\Users\ENTI\Desktop\TdP_Bomberman\\bin\x64Debug\G32_AA2-2.exe
   0 File(s) copied

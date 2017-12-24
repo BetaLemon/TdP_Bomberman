@@ -30,5 +30,3 @@
 	};
 
 	enum class Key {UP, DOWN, LEFT, RIGHT, NONE};
-
-	struct CanMove { bool up, down, left, right; };

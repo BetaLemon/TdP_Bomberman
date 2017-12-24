@@ -1,6 +1,11 @@
 #pragma once
 
 #include "Scene.h"
+#include "rapidxml.hpp"
+#include "rapidxml_iterators.hpp"
+#include "rapidxml_print.hpp"
+#include "rapidxml_utils.hpp"
+#include <sstream>
 
 struct Button {
 	Text text;
@@ -9,7 +14,7 @@ struct Button {
 
 class Menu : public Scene {
 private:
-	Button play1Butt, play2Butt, exitButt, rankButt;
+	Button play1Butt, play2Butt, exitButt, rankButt, musicButt;
 	Rect mouseDown;
 public:
 	Menu();
