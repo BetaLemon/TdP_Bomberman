@@ -52,6 +52,7 @@ void Play::EventsHandler() {
 		if (event.type == SDL_KEYDOWN) {
 			player1.setPlayerState(event,keyboardArray);
 			player2.setPlayerState(event,keyboardArray);
+			// Esto tendría que estar en Update:
 			if (event.key.keysym.sym == SDLK_ESCAPE) {
 				sceneState = SceneState::GOTO_MENU;
 			}
