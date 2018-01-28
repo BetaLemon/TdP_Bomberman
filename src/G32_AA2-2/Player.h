@@ -22,7 +22,7 @@ private:
 	Vector2 calculatePosition;
 	int width, height;
 	int velocity = 5;
-	Bomb bomb;
+	Bomb bomb = Bomb();
 	PlayerState facing = LEFT;
 	PlayerMoveAllow canMove;
 	//powerUp

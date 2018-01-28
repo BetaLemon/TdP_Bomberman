@@ -67,7 +67,7 @@ void Ranking::WriteBinary(std::string path) {
 	std::ofstream binFileOUT(path, std::ios::out | std::ios::binary);
 	for (int i = 0; i < 10; i++) {
 		binFileOUT.write(outNames[i].c_str(), outNames[i].size());
-		binFileOUT.write("\0", sizeof(char));
+		binFileOUT.write('\0', sizeof(char));
 	}
 	binFileOUT.write(reinterpret_cast<char *>(&outPoints), sizeof(int) * 10);
 

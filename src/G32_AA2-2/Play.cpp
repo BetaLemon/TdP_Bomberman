@@ -56,9 +56,9 @@ void Play::EventsHandler() {
 			if (event.key.keysym.sym == SDLK_ESCAPE) {
 				sceneState = SceneState::GOTO_MENU;
 			}
-			if (event.key.keysym.sym == SDLK_SPACE) {
+			/*if (event.key.keysym.sym == SDLK_SPACE) {
 				sceneState = SceneState::GOTO_SETSCORE;
-			}
+			}*/
 		}
 	}
 }
@@ -176,8 +176,8 @@ void Play::Draw() {
 	// Player:
 	player1.Player::Draw();
 	player2.Player::Draw();
-	player1.getBomb().Bomb::Draw();
-	player2.getBomb().Bomb::Draw();
+	//player1.getBomb().Draw();
+	//player2.getBomb().Draw();
 
 	Renderer::Instance()->Render();
 }

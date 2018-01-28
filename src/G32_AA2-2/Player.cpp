@@ -48,7 +48,7 @@ void Player::Draw() {
 
 		break;
 	}
-	
+	bomb.Bomb::Draw();
 }
 
 //Cambiar el state del player segun un input recibido
@@ -160,11 +160,14 @@ void Player::Update() {
 			else spriteX++;
 			state = NONE;
 			break;
-			
+		case BOMB:
+			bomb.Init(position);
+			break;
 	}
 	//Comprobar objetos
 	calculatePosition = Vector2(position.x + PLAYER_WIDTH / 2,position.y+PLAYER_HEIGHT/2);
 	bomb.Update();
+	//std::cout << "Bomb State: " << bomb.getState() << std::endl;
 }
 
 int Player::getPoints() {
