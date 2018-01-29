@@ -19,14 +19,10 @@ private:
 	int spriteY = 1;
 	PlayerState state = NONE;
 	Vector2 position;
-	Vector2 calculatePosition;
-	int width, height;
-	int velocity = 5;
-	Bomb bomb = Bomb();
+	int speed = 12;
+	Bomb bomb;
 	PlayerState facing = LEFT;
 	PlayerMoveAllow canMove;
-	//powerUp
-	//sprite
 public:
 	
 	Player();
@@ -37,10 +33,6 @@ public:
 	PlayerState getPlayerState() { return state; }
 	PlayerState getPlayerFacing() { return facing; }
 	Vector2 getPosition() { return position; }
-	SDL_Rect getCollider() {
-		SDL_Rect coll = { position.x,position.y,width,height };
-		return coll;
-	}
 
 	Vector2 getGridPos();
 	int getPoints();

@@ -4,8 +4,6 @@
 #include "Types.h"
 #include "Renderer.h"
 
-using namespace std;
-
 enum Celltype {FIXED,DESTRUCTIBLE,SKATES,HELMET,FLOOR};
 struct Cell {
 	//Sprite
@@ -25,5 +23,6 @@ public:
 	void Update();
 	void Draw();
  	Cell getCell(Vector2 pos) { return grid[pos.x][pos.y]; }
+	void destroyCell(Vector2 pos);
 	Vector2 getCellPixPos(Vector2 pos);
 };

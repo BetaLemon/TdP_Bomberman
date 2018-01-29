@@ -9,6 +9,9 @@ class Bomb {
 		Vector2 pos;
 		BombState state;
 		float timer;
+		Vector2 bomb_s;
+		Vector2 explos_s;
+		int explosionStage;
 		//sprite
 	public:
 		Bomb();

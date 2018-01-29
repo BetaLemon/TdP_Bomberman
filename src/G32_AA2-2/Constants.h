@@ -23,6 +23,8 @@ const std::string PLAY_BG = "PLAY_BG";
 const std::string PLAYER1_SPRITE = "PLAYER1_SPRITE";
 const std::string PLAYER2_SPRITE = "PLAYER2_SPRITE";
 const std::string PLAY_CELL_SPRITE = "PLAY_CELL_SPRITE";
+const std::string PLAY_BOMB_SPRITE = "PLAY_BOMB_SPRITE";
+const std::string PLAY_EXPLOSION_SPRITE = "PLAY_EXPLOSION_SPRITE";
 const std::string PLAY_TEXT_SCORE_PLAYER1 = "PLAY_TEXT_SCORE_PLAYER1";
 
 const std::string MENU_TEXT_BUTTON_PLAY1 = "MENU_TEXT_BUTTON_PLAY1";

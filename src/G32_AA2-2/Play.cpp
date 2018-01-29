@@ -3,10 +3,16 @@
 Play::Play() {
 	sceneState = SceneState::RUNNING;
 	map = Map(1);
+	Renderer::Instance()->LoadTexture(PLAY_BG, PATH_IMG + "bgGame.jpg");
+	Renderer::Instance()->LoadFont({ HUD_FONT, PATH_FONT + "game_over.ttf", 60 });
 }
 
 Play::Play(int level) {
 	sceneState = SceneState::RUNNING;
+
+	Renderer::Instance()->LoadTexture(PLAY_BG, PATH_IMG + "bgGame.jpg");
+	Renderer::Instance()->LoadFont({ HUD_FONT, PATH_FONT + "game_over.ttf", 60 });
+
 	map = Map(level);
 	switch (level) {
 	case 1:
@@ -52,7 +58,7 @@ void Play::EventsHandler() {
 		if (event.type == SDL_KEYDOWN) {
 			player1.setPlayerState(event,keyboardArray);
 			player2.setPlayerState(event,keyboardArray);
-			// Esto tendría que estar en Update:
+			// Esto tendrï¿½a que estar en Update:
 			if (event.key.keysym.sym == SDLK_ESCAPE) {
 				sceneState = SceneState::GOTO_MENU;
 			}
@@ -99,50 +105,57 @@ PlayerMoveAllow Play::CanPlayerMove(Player _player) {
 
 	return canMove;
 }
-
-void Play::PlayerCollision(Player p1, Player p2) {
-	PlayerMoveAllow canMove1 = p1.getCanMove();
-	PlayerMoveAllow canMove2 = p2.getCanMove();
-
-	Vector2 pos1 = p1.getPosition();
-	Vector2 pos2 = p2.getPosition();
-
-	if (pos1.x == pos2.x && pos1.y == pos2.y + CELL_HEIGHT) { canMove1.up = false; canMove2.down = false; }	// p1 is above p2.
-	if (pos1.x == pos2.x && pos1.y == pos2.y - CELL_HEIGHT) { canMove1.down = false; canMove2.up = false; }	// p1 is below p2.
-	if (pos1.x == pos2.x + CELL_WIDTH && pos1.y == pos2.y) { canMove1.left = false; canMove2.right = false; }	// p1 is to the right of p2.
-	if (pos1.x == pos2.x - CELL_WIDTH && pos1.y == pos2.y) { canMove1.right = false; canMove2.left = false; }	// p1 is to the left of p2.
-
-	p1.setCanMove(canMove1);
-	p2.setCanMove(canMove2);
-}
+//
+//void Play::PlayerCollision(Player p1, Player p2) {
+//	PlayerMoveAllow canMove1 = p1.getCanMove();
+//	PlayerMoveAllow canMove2 = p2.getCanMove();
+//
+//	Vector2 pos1 = p1.getPosition();
+//	Vector2 pos2 = p2.getPosition();
+//
+//	if (pos1.x == pos2.x && pos1.y == pos2.y + CELL_HEIGHT) { canMove1.up = false; canMove2.down = false; }	// p1 is above p2.
+//	if (pos1.x == pos2.x && pos1.y == pos2.y - CELL_HEIGHT) { canMove1.down = false; canMove2.up = false; }	// p1 is below p2.
+//	if (pos1.x == pos2.x + CELL_WIDTH && pos1.y == pos2.y) { canMove1.left = false; canMove2.right = false; }	// p1 is to the right of p2.
+//	if (pos1.x == pos2.x - CELL_WIDTH && pos1.y == pos2.y) { canMove1.right = false; canMove2.left = false; }	// p1 is to the left of p2.
+//
+//	p1.setCanMove(canMove1);
+//	p2.setCanMove(canMove2);
+//}
 
 void Play::Update() {
+
 	player1.setCanMove(CanPlayerMove(player1));
 	player2.setCanMove(CanPlayerMove(player2));
 
-	PlayerCollision(player1, player2);
+	//PlayerCollision(player1, player2);
+
+	colliders[ObjectType::PLAYER1].setCollRect({ player1.getPosition().x, player1.getPosition().y, PLAYER_WIDTH, PLAYER_HEIGHT });
+	colliders[ObjectType::PLAYER2].setCollRect({ player2.getPosition().x, player2.getPosition().y, PLAYER_WIDTH, PLAYER_HEIGHT });
 
 	player1.Update();
 	player2.Update();
 
 	if (player1.getPlayerState() == BOMB) InitBomb(player1);
 	if (player2.getPlayerState() == BOMB) InitBomb(player2);
+
+	if (player1.getBomb().getState() == BombState::ACTIVE) {
+		colliders[ObjectType::BOMB1].setCollRect({ player1.getPosition().x, player1.getPosition().y, CELL_WIDTH, CELL_HEIGHT });
+	}
+	if (player2.getBomb().getState() == BombState::ACTIVE) {
+		colliders[ObjectType::BOMB2].setCollRect({ player2.getPosition().x, player2.getPosition().y, CELL_WIDTH, CELL_HEIGHT });
+	}
 }
 
 void Play::Draw() {
 
-	// !!! HE PUESTO QUE PLAY DIBUJA A MAP. ESTÁ BIEN ????
-
 	Renderer::Instance()->Clear();
 
 	// Background:
-	Renderer::Instance()->LoadTexture(PLAY_BG, PATH_IMG + "bgGame.jpg");
 	Renderer::Instance()->PushImage(PLAY_BG, { 0,0,SCREEN_WIDTH, SCREEN_HEIGHT });
 
 	// HUD:
 		// player 1 life:
-	Renderer::Instance()->LoadFont({ HUD_FONT, PATH_FONT + "game_over.ttf", 60 });
-	std::string tmp = "P1 LIFE: " + to_string(player1.getLife());
+	std::string tmp = "P1 LIFE: " + std::to_string(player1.getLife());
 	Text lifePlayer1 = { HUD_TEXT_LIFE_PLAYER1, tmp ,{ 0, 0, 0, 255 }, 15, 5 };
 	Vector2 tmpSize;
 	tmpSize = Renderer::Instance()->GetTextureSize(HUD_TEXT_LIFE_PLAYER1);
@@ -150,21 +163,21 @@ void Play::Draw() {
 	Renderer::Instance()->PushImage(HUD_TEXT_LIFE_PLAYER1, { 25, 0, tmpSize.x, tmpSize.y });
 
 		// player 2 life:
-	tmp = "P2 LIFE: " + to_string(player2.getLife());
+	tmp = "P2 LIFE: " + std::to_string(player2.getLife());
 	Text lifePlayer2 = { HUD_TEXT_LIFE_PLAYER2, tmp ,{ 0, 0, 0, 255 }, 15, 5 };
 	tmpSize = Renderer::Instance()->GetTextureSize(HUD_TEXT_LIFE_PLAYER2);
 	Renderer::Instance()->LoadTextureText(HUD_FONT, lifePlayer2);
 	Renderer::Instance()->PushImage(HUD_TEXT_LIFE_PLAYER2, { SCREEN_WIDTH - 150, 0, tmpSize.x, tmpSize.y });
 
 		// player 1 points:
-	tmp = "P1 POINTS: " + to_string(player1.getPoints());
+	tmp = "P1 POINTS: " + std::to_string(player1.getPoints());
 	Text pointsPlayer1 = { HUD_TEXT_POINTS_PLAYER1, tmp ,{ 0, 0, 0, 255 }, 15, 5 };
 	tmpSize = Renderer::Instance()->GetTextureSize(HUD_TEXT_POINTS_PLAYER1);
 	Renderer::Instance()->LoadTextureText(HUD_FONT, pointsPlayer1);
 	Renderer::Instance()->PushImage(HUD_TEXT_POINTS_PLAYER1, { 25, 20, tmpSize.x, tmpSize.y });
 
 		// player 2 points:
-	tmp = "P2 POINTS: " + to_string(player2.getPoints());
+	tmp = "P2 POINTS: " + std::to_string(player2.getPoints());
 	Text pointsPlayer2 = { HUD_TEXT_POINTS_PLAYER2, tmp ,{ 0, 0, 0, 255 }, 15, 5 };
 	tmpSize = Renderer::Instance()->GetTextureSize(HUD_TEXT_POINTS_PLAYER2);
 	Renderer::Instance()->LoadTextureText(HUD_FONT, pointsPlayer2);
@@ -176,8 +189,6 @@ void Play::Draw() {
 	// Player:
 	player1.Player::Draw();
 	player2.Player::Draw();
-	//player1.getBomb().Draw();
-	//player2.getBomb().Draw();
 
 	Renderer::Instance()->Render();
 }

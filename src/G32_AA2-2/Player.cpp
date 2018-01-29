@@ -161,11 +161,12 @@ void Player::Update() {
 			state = NONE;
 			break;
 		case BOMB:
-			bomb.Init(position);
+			if (bomb.getState() == BombState::WAITING) {
+				bomb.Init(position);
+			}
+			state = NONE;
 			break;
 	}
-	//Comprobar objetos
-	calculatePosition = Vector2(position.x + PLAYER_WIDTH / 2,position.y+PLAYER_HEIGHT/2);
 	bomb.Update();
 	//std::cout << "Bomb State: " << bomb.getState() << std::endl;
 }
