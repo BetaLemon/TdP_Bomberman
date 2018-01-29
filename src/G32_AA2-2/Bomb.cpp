@@ -28,13 +28,15 @@ void Bomb::Update() {
 		explosionStage = -1;
 		if (timer > 1.4f) { explosionStage = 0; }
 		if (timer > 1.5f) { explosionStage = 1; }
-		if (timer > 1.55f) { explosionStage = 2; }
-		if (timer > 1.6f) { explosionStage = 3; }
+		if (timer > 1.55f){ explosionStage = 2; }
+		if (timer > 1.6f) { explosionStage = 3; exploded = true; }
 		if (timer > 1.8f) {
 			state = BombState::WAITING;
 		}
 	}
-	//std::cout << timer << std::endl;
+	else {
+		exploded = false;
+	}
 }
 
 void Bomb::setState(BombState _state) {
@@ -82,3 +84,11 @@ void Bomb::Draw() {
 	}
 }
 
+Vector2 Bomb::getGridPos() {
+	int x = floor(pos.x / CELL_WIDTH);
+	int y = floor((pos.y - HUD_HEIGHT) / CELL_HEIGHT);
+	return { x,y };
+	std::cout << x << " " << y << std::endl;
+}
+
+bool Bomb::hasExploded() { return exploded; }

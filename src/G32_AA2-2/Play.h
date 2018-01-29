@@ -17,8 +17,8 @@ private:
 	Map map;
 
 	PlayerMoveAllow CanPlayerMove(Player _player);
-	void PlayerCollision(Player p1, Player p2);
 	void InitBomb(Player _player);
+	void explodeMap(Vector2 center);
 	//map
 	//pointsFont
 	//lifeSprite

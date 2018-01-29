@@ -123,3 +123,7 @@ void Map::Draw() {
 Vector2 Map::getCellPixPos(Vector2 pos) {
 	return { (pos.x * CELL_WIDTH + HUD_HEIGHT) + (CELL_WIDTH/2), (pos.y * CELL_HEIGHT) + (CELL_HEIGHT/2) };
 }
+
+void Map::destroyCell(Vector2 pos) {
+	grid[pos.x][pos.y].type = Celltype::FLOOR;
+}

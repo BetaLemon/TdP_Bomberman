@@ -20,7 +20,7 @@ public:
 	Map();
 	Map(int level);
 	~Map();
-	void Update();
+	//void Update();
 	void Draw();
  	Cell getCell(Vector2 pos) { return grid[pos.x][pos.y]; }
 	void destroyCell(Vector2 pos);

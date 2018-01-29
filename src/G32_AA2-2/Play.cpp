@@ -122,6 +122,34 @@ PlayerMoveAllow Play::CanPlayerMove(Player _player) {
 //	p2.setCanMove(canMove2);
 //}
 
+void Play::explodeMap(Vector2 center) {
+	map.destroyCell(center);
+	if (map.getCell({ center.x, center.y - 1 }).type == Celltype::DESTRUCTIBLE) {	// [x, y-1]
+		map.destroyCell({ center.x, center.y - 1});
+	}
+	if (map.getCell({ center.x, center.y - 2 }).type == Celltype::DESTRUCTIBLE) {	// [x, y-2]
+		map.destroyCell({ center.x, center.y - 2});
+	}
+	if (map.getCell({ center.x, center.y + 1 }).type == Celltype::DESTRUCTIBLE) {	// [x, y+1]
+		map.destroyCell({ center.x, center.y + 1});
+	}
+	if (map.getCell({ center.x, center.y + 2 }).type == Celltype::DESTRUCTIBLE) {	// [x, y+2]
+		map.destroyCell({ center.x, center.y + 2});
+	}
+	if (map.getCell({ center.x + 1, center.y }).type == Celltype::DESTRUCTIBLE) {	// [x+1, y]
+		map.destroyCell({ center.x + 1, center.y });
+	}
+	if (map.getCell({ center.x + 2, center.y }).type == Celltype::DESTRUCTIBLE) {	// [x+2, y]
+		map.destroyCell({ center.x + 2, center.y });
+	}
+	if (map.getCell({ center.x - 1, center.y }).type == Celltype::DESTRUCTIBLE) {	// [x-1, y]
+		map.destroyCell({ center.x - 1, center.y });
+	}
+	if (map.getCell({ center.x - 2, center.y }).type == Celltype::DESTRUCTIBLE) {	// [x-2, y]
+		map.destroyCell({ center.x - 2, center.y });
+	}
+}
+
 void Play::Update() {
 
 	player1.setCanMove(CanPlayerMove(player1));
@@ -129,21 +157,18 @@ void Play::Update() {
 
 	//PlayerCollision(player1, player2);
 
-	colliders[ObjectType::PLAYER1].setCollRect({ player1.getPosition().x, player1.getPosition().y, PLAYER_WIDTH, PLAYER_HEIGHT });
-	colliders[ObjectType::PLAYER2].setCollRect({ player2.getPosition().x, player2.getPosition().y, PLAYER_WIDTH, PLAYER_HEIGHT });
-
 	player1.Update();
 	player2.Update();
-
-	if (player1.getPlayerState() == BOMB) InitBomb(player1);
-	if (player2.getPlayerState() == BOMB) InitBomb(player2);
-
-	if (player1.getBomb().getState() == BombState::ACTIVE) {
-		colliders[ObjectType::BOMB1].setCollRect({ player1.getPosition().x, player1.getPosition().y, CELL_WIDTH, CELL_HEIGHT });
+	if (map.getCell(player1.getGridPos()).type == Celltype::FLOOR) {
+		if (player1.getPlayerState() == BOMB) InitBomb(player1);
 	}
-	if (player2.getBomb().getState() == BombState::ACTIVE) {
-		colliders[ObjectType::BOMB2].setCollRect({ player2.getPosition().x, player2.getPosition().y, CELL_WIDTH, CELL_HEIGHT });
+	if (map.getCell(player2.getGridPos()).type == Celltype::FLOOR) {
+		if (player2.getPlayerState() == BOMB) InitBomb(player2);
 	}
+	Bomb tmp = player1.getBomb();
+	if (tmp.hasExploded()) { explodeMap(tmp.getGridPos()); }
+	tmp = player2.getBomb();
+	if (tmp.hasExploded()) { explodeMap(tmp.getGridPos()); }
 }
 
 void Play::Draw() {

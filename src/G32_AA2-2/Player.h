@@ -19,7 +19,7 @@ private:
 	int spriteY = 1;
 	PlayerState state = NONE;
 	Vector2 position;
-	int speed = 12;
+	Vector2 speed = {CELL_WIDTH, CELL_HEIGHT};
 	Bomb bomb;
 	PlayerState facing = LEFT;
 	PlayerMoveAllow canMove;

@@ -8,6 +8,7 @@ class Bomb {
 	private:
 		Vector2 pos;
 		BombState state;
+		bool exploded;
 		float timer;
 		Vector2 bomb_s;
 		Vector2 explos_s;
@@ -19,6 +20,8 @@ class Bomb {
 		void Update();
 		void Draw();
 		float getTimer() { return timer; }
+		Vector2 getGridPos();
 		void setState(BombState _state);
 		BombState getState() { return state; }
+		bool hasExploded();
 };

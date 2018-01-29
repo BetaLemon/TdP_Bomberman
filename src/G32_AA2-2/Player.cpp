@@ -117,7 +117,7 @@ void Player::Update() {
 	switch (state) {
 		case UP:
 			if (canMove.up) {
-				position = Vector2(position.x, position.y - CELL_HEIGHT);
+				position = Vector2(position.x, position.y - speed.y);
 			}
 			spriteY = 0;
 			//Hasta 10 para que se reduzca la velocidad
@@ -129,7 +129,7 @@ void Player::Update() {
 			break;
 		case DOWN:
 			if (canMove.down) {
-				position = Vector2(position.x, position.y + CELL_HEIGHT);
+				position = Vector2(position.x, position.y + speed.y);
 			}
 			spriteY = 2;
 			if (spriteX == 10) {
@@ -140,7 +140,7 @@ void Player::Update() {
 			break;
 		case LEFT:
 			if (canMove.left) {
-				position = Vector2(position.x - CELL_WIDTH, position.y);
+				position = Vector2(position.x - speed.x, position.y);
 			}
 			spriteY = 1;
 			if (spriteX == 10) {
@@ -151,7 +151,7 @@ void Player::Update() {
 			break;
 		case RIGHT:
 			if (canMove.right) {
-				position = Vector2(position.x + CELL_WIDTH, position.y);
+				position = Vector2(position.x + speed.x, position.y);
 			}
 			spriteY = 3;
 			if (spriteX == 10) {
