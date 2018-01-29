@@ -4,14 +4,14 @@ Play::Play() {
 	sceneState = SceneState::RUNNING;
 	map = Map(1);
 	Renderer::Instance()->LoadTexture(PLAY_BG, PATH_IMG + "bgGame.jpg");
-	Renderer::Instance()->LoadFont({ HUD_FONT, PATH_FONT + "game_over.ttf", 60 });
+	Renderer::Instance()->LoadFont({ HUD_FONT, PATH_FONT + "game_over.ttf", 80 });
 }
 
 Play::Play(int level) {
 	sceneState = SceneState::RUNNING;
 
 	Renderer::Instance()->LoadTexture(PLAY_BG, PATH_IMG + "bgGame.jpg");
-	Renderer::Instance()->LoadFont({ HUD_FONT, PATH_FONT + "game_over.ttf", 60 });
+	Renderer::Instance()->LoadFont({ HUD_FONT, PATH_FONT + "game_over.ttf", 80 });
 
 	map = Map(level);
 	switch (level) {
@@ -110,8 +110,8 @@ void Play::PlayerCollision(Player* p1, Player* p2) {
 	PlayerMoveAllow canMove1 = p1->getCanMove();
 	PlayerMoveAllow canMove2 = p2->getCanMove();
 
-	Vector2 pos1 = p1->getGridPos(); std::cout << pos1.x << " " << pos1.y << std::endl;
-	Vector2 pos2 = p2->getGridPos(); std::cout << pos2.x << " " << pos2.y << std::endl;
+	Vector2 pos1 = p1->getGridPos();
+	Vector2 pos2 = p2->getGridPos();
 
 	if (pos1.x == pos2.x && pos1.y == pos2.y - 1) { canMove1.down = false; canMove2.up = false; }	// p1 is above p2.
 	if (pos1.x == pos2.x && pos1.y == pos2.y + 1) { canMove1.up = false; canMove2.down = false; }	// p1 is below p2.
@@ -168,22 +168,26 @@ int Play::explodeMap(Vector2 center) {
 	}
 
 	Vector2 p = player1.getGridPos();
-	if (center.x == p.x && center.y == p.y) { player2.addPoints(DEATH_POINTS); }
-	if (center.x + 1 == p.x && center.y == p.y) { player2.addPoints(DEATH_POINTS); }
-	if (center.x + 2 == p.x && center.y == p.y) { player2.addPoints(DEATH_POINTS); }
-	if (center.x == p.x && center.y + 1 == p.y) { player2.addPoints(DEATH_POINTS); }
-	if (center.x == p.x && center.y + 2 == p.y) { player2.addPoints(DEATH_POINTS); }
-	if (center.x == p.x && center.y - 1 == p.y) { player2.addPoints(DEATH_POINTS); }
-	if (center.x == p.x && center.y - 2 == p.y) { player2.addPoints(DEATH_POINTS); }
-	if (center.x - 1 == p.x && center.y == p.y) { player2.addPoints(DEATH_POINTS); }
-	if (center.x - 2 == p.x && center.y == p.y) { player2.addPoints(DEATH_POINTS); }
+	if (center.x == p.x && center.y == p.y) { player2.addPoints(DEATH_POINTS); player1.reduceLife(1); }
+	if (center.x + 1 == p.x && center.y == p.y) { player2.addPoints(DEATH_POINTS); player1.reduceLife(1); }
+	if (center.x + 2 == p.x && center.y == p.y) { player2.addPoints(DEATH_POINTS); player1.reduceLife(1); }
+	if (center.x == p.x && center.y + 1 == p.y) { player2.addPoints(DEATH_POINTS); player1.reduceLife(1); }
+	if (center.x == p.x && center.y + 2 == p.y) { player2.addPoints(DEATH_POINTS); player1.reduceLife(1); }
+	if (center.x == p.x && center.y - 1 == p.y) { player2.addPoints(DEATH_POINTS); player1.reduceLife(1); }
+	if (center.x == p.x && center.y - 2 == p.y) { player2.addPoints(DEATH_POINTS); player1.reduceLife(1); }
+	if (center.x - 1 == p.x && center.y == p.y) { player2.addPoints(DEATH_POINTS); player1.reduceLife(1); }
+	if (center.x - 2 == p.x && center.y == p.y) { player2.addPoints(DEATH_POINTS); player1.reduceLife(1); }
 
 	p = player2.getGridPos();
-	if (center.x == p.x && center.y == p.y) { player1.addPoints(DEATH_POINTS); }
-	if (center.x + 1 == p.x && center.y == p.y) { player1.addPoints(DEATH_POINTS); }
-	if (center.x == p.x && center.y + 1 == p.y) { player1.addPoints(DEATH_POINTS); }
-	if (center.x == p.x && center.y - 1 == p.y) { player1.addPoints(DEATH_POINTS); }
-	if (center.x - 1 == p.x && center.y == p.y) { player1.addPoints(DEATH_POINTS); }
+	if (center.x == p.x && center.y == p.y) { player1.addPoints(DEATH_POINTS); player2.reduceLife(1); }
+	if (center.x + 1 == p.x && center.y == p.y) { player1.addPoints(DEATH_POINTS); player2.reduceLife(1); }
+	if (center.x + 2 == p.x && center.y == p.y) { player1.addPoints(DEATH_POINTS); player2.reduceLife(1); }
+	if (center.x == p.x && center.y + 1 == p.y) { player1.addPoints(DEATH_POINTS); player2.reduceLife(1); }
+	if (center.x == p.x && center.y + 2 == p.y) { player1.addPoints(DEATH_POINTS); player2.reduceLife(1); }
+	if (center.x == p.x && center.y - 1 == p.y) { player1.addPoints(DEATH_POINTS); player2.reduceLife(1); }
+	if (center.x == p.x && center.y - 2 == p.y) { player1.addPoints(DEATH_POINTS); player2.reduceLife(1); }
+	if (center.x - 1 == p.x && center.y == p.y) { player1.addPoints(DEATH_POINTS); player2.reduceLife(1); }
+	if (center.x - 2 == p.x && center.y == p.y) { player1.addPoints(DEATH_POINTS); player2.reduceLife(1); }
 
 	return cellCount;
 }
@@ -220,6 +224,11 @@ BombRange Play::explodeRange(Vector2 center) {
 }
 
 void Play::Update() {
+	clock.tick();
+	roundTime += clock.delta;
+	if (roundTime >= (ROUND_DURATION * 1000)) {
+		sceneState = SceneState::GOTO_SETSCORE;
+	}
 
 	player1.setCanMove(CanPlayerMove(player1));
 	player2.setCanMove(CanPlayerMove(player2));
@@ -252,15 +261,7 @@ void Play::Update() {
 			player2.addPoints(explodeMap(tmp.getGridPos()) * BLOCK_POINTS);
 		}
 	}
-	/*
-	BombRange tmpRange = { 0,0,0,0 };
-	player2.setBombRange(tmpRange);
-	if (tmp.hasExploded()) { player1.addPoints(explodeMap(tmp.getGridPos()) * BLOCK_POINTS); tmpRange = explodeRange(tmp.getGridPos()); }
-	if (tmp.getState() == BombState::ACTIVE) { player1.setBombRange(tmpRange); }
-	tmp = player2.getBomb();
-	player2.setBombRange(tmpRange);
-	if (tmp.hasExploded()) { player2.addPoints(explodeMap(tmp.getGridPos()) * BLOCK_POINTS); tmpRange = explodeRange(tmp.getGridPos()); }
-	//if (tmp.getState() == BombState::ACTIVE) { player2.setBombRange(tmpRange); }*/
+
 }
 
 void Play::Draw() {
@@ -284,21 +285,27 @@ void Play::Draw() {
 	Text lifePlayer2 = { HUD_TEXT_LIFE_PLAYER2, tmp ,{ 0, 0, 0, 255 }, 15, 5 };
 	tmpSize = Renderer::Instance()->GetTextureSize(HUD_TEXT_LIFE_PLAYER2);
 	Renderer::Instance()->LoadTextureText(HUD_FONT, lifePlayer2);
-	Renderer::Instance()->PushImage(HUD_TEXT_LIFE_PLAYER2, { SCREEN_WIDTH - 150, 0, tmpSize.x, tmpSize.y });
+	Renderer::Instance()->PushImage(HUD_TEXT_LIFE_PLAYER2, { SCREEN_WIDTH - 250, 0, tmpSize.x, tmpSize.y });
 
 		// player 1 points:
 	tmp = "P1 POINTS: " + std::to_string(player1.getPoints());
 	Text pointsPlayer1 = { HUD_TEXT_POINTS_PLAYER1, tmp ,{ 0, 0, 0, 255 }, 15, 5 };
 	tmpSize = Renderer::Instance()->GetTextureSize(HUD_TEXT_POINTS_PLAYER1);
 	Renderer::Instance()->LoadTextureText(HUD_FONT, pointsPlayer1);
-	Renderer::Instance()->PushImage(HUD_TEXT_POINTS_PLAYER1, { 25, 20, tmpSize.x, tmpSize.y });
+	Renderer::Instance()->PushImage(HUD_TEXT_POINTS_PLAYER1, { 25, 30, tmpSize.x, tmpSize.y });
 
 		// player 2 points:
 	tmp = "P2 POINTS: " + std::to_string(player2.getPoints());
 	Text pointsPlayer2 = { HUD_TEXT_POINTS_PLAYER2, tmp ,{ 0, 0, 0, 255 }, 15, 5 };
 	tmpSize = Renderer::Instance()->GetTextureSize(HUD_TEXT_POINTS_PLAYER2);
 	Renderer::Instance()->LoadTextureText(HUD_FONT, pointsPlayer2);
-	Renderer::Instance()->PushImage(HUD_TEXT_POINTS_PLAYER2, { SCREEN_WIDTH - 180, 20, tmpSize.x, tmpSize.y });
+	Renderer::Instance()->PushImage(HUD_TEXT_POINTS_PLAYER2, { SCREEN_WIDTH - 250, 30, tmpSize.x, tmpSize.y });
+		// Time left:
+	tmp = std::to_string(ROUND_DURATION - int(floor(roundTime/1000)));
+	Text timeLeft = { HUD_TEXT_TIME_LEFT, tmp ,{ 0, 0, 0, 255 }, 15, 5 };
+	tmpSize = Renderer::Instance()->GetTextureSize(HUD_TEXT_TIME_LEFT);
+	Renderer::Instance()->LoadTextureText(HUD_FONT, timeLeft);
+	Renderer::Instance()->PushImage(HUD_TEXT_TIME_LEFT, { SCREEN_WIDTH / 2, 15, tmpSize.x, tmpSize.y });
 
 	// Tiles:
 	map.Map::Draw();

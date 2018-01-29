@@ -21,6 +21,8 @@
 #define BLOCK_POINTS 15
 #define DEATH_POINTS 100
 
+#define ROUND_DURATION 80
+
 const std::string MENU_BG = "MENU_BG";
 const std::string PLAY_BG = "PLAY_BG";
 const std::string PLAYER1_SPRITE = "PLAYER1_SPRITE";
@@ -40,6 +42,7 @@ const std::string HUD_TEXT_LIFE_PLAYER1 = "HUD_TEXT_LIFE_PLAYER1";
 const std::string HUD_TEXT_LIFE_PLAYER2 = "HUD_TEXT_LIFE_PLAYER2";
 const std::string HUD_TEXT_POINTS_PLAYER1 = "HUD_TEXT_POINTS_PLAYER1";
 const std::string HUD_TEXT_POINTS_PLAYER2 = "HUD_TEXT_POINTS_PLAYER2";
+const std::string HUD_TEXT_TIME_LEFT = "HUD_TEXT_TIME_LEFT";
 
 const std::string RANKING_TEXT = "RANKING_TEXT";
 ///

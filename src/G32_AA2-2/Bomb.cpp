@@ -97,7 +97,6 @@ Vector2 Bomb::getGridPos() {
 	int x = floor(pos.x / CELL_WIDTH);
 	int y = floor((pos.y - HUD_HEIGHT) / CELL_HEIGHT);
 	return { x,y };
-	std::cout << x << " " << y << std::endl;
 }
 
 bool Bomb::hasExploded() { return exploded; }

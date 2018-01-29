@@ -16,7 +16,8 @@ private:
 	Player player1;
 	Player player2;
 	Map map;
-
+	Clock clock;
+	int roundTime;
 	PlayerMoveAllow CanPlayerMove(Player _player);
 	void InitBomb(Player _player);
 	int explodeMap(Vector2 center);

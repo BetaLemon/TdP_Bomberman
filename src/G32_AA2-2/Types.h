@@ -34,4 +34,14 @@
 		int x, y;
 	};
 
+	struct Clock {
+		int prevTickTime = 0;
+		int delta = 0;
+		void tick() {
+			int tickTime = SDL_GetTicks();
+			delta = tickTime - prevTickTime;
+			prevTickTime = tickTime;
+		}
+	};
+
 	enum class Key {UP, DOWN, LEFT, RIGHT, NONE};

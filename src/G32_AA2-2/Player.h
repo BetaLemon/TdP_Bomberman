@@ -33,7 +33,7 @@ public:
 	PlayerState getPlayerState() { return state; }
 	PlayerState getPlayerFacing() { return facing; }
 	Vector2 getPosition() { return position; }
-
+	void reduceLife(int amount);
 	Vector2 getGridPos();
 	int getPoints();
 	void addPoints(int amount);

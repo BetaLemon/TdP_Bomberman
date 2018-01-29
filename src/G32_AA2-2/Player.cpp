@@ -51,6 +51,10 @@ void Player::Draw() {
 	bomb.Bomb::Draw();
 }
 
+void Player::reduceLife(int amount) {
+	life -= amount;
+}
+
 //Cambiar el state del player segun un input recibido
 void Player::setPlayerState(SDL_Event e,const Uint8 *array) {
 	
