@@ -184,4 +184,6 @@ void Player::setCanMove(PlayerMoveAllow cM) {
 	canMove = cM;
 }
 
-
+void Player::setBombRange(BombRange _range) {
+	bomb.setRange(_range);
+}

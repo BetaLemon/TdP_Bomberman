@@ -105,49 +105,118 @@ PlayerMoveAllow Play::CanPlayerMove(Player _player) {
 
 	return canMove;
 }
-//
-//void Play::PlayerCollision(Player p1, Player p2) {
-//	PlayerMoveAllow canMove1 = p1.getCanMove();
-//	PlayerMoveAllow canMove2 = p2.getCanMove();
-//
-//	Vector2 pos1 = p1.getPosition();
-//	Vector2 pos2 = p2.getPosition();
-//
-//	if (pos1.x == pos2.x && pos1.y == pos2.y + CELL_HEIGHT) { canMove1.up = false; canMove2.down = false; }	// p1 is above p2.
-//	if (pos1.x == pos2.x && pos1.y == pos2.y - CELL_HEIGHT) { canMove1.down = false; canMove2.up = false; }	// p1 is below p2.
-//	if (pos1.x == pos2.x + CELL_WIDTH && pos1.y == pos2.y) { canMove1.left = false; canMove2.right = false; }	// p1 is to the right of p2.
-//	if (pos1.x == pos2.x - CELL_WIDTH && pos1.y == pos2.y) { canMove1.right = false; canMove2.left = false; }	// p1 is to the left of p2.
-//
-//	p1.setCanMove(canMove1);
-//	p2.setCanMove(canMove2);
-//}
 
-void Play::explodeMap(Vector2 center) {
+void Play::PlayerCollision(Player* p1, Player* p2) {
+	PlayerMoveAllow canMove1 = p1->getCanMove();
+	PlayerMoveAllow canMove2 = p2->getCanMove();
+
+	Vector2 pos1 = p1->getGridPos(); std::cout << pos1.x << " " << pos1.y << std::endl;
+	Vector2 pos2 = p2->getGridPos(); std::cout << pos2.x << " " << pos2.y << std::endl;
+
+	if (pos1.x == pos2.x && pos1.y == pos2.y - 1) { canMove1.down = false; canMove2.up = false; }	// p1 is above p2.
+	if (pos1.x == pos2.x && pos1.y == pos2.y + 1) { canMove1.up = false; canMove2.down = false; }	// p1 is below p2.
+	if (pos1.x == pos2.x - 1 && pos1.y == pos2.y) { canMove1.right = false; canMove2.left = false; }	// p1 is to the right of p2.
+	if (pos1.x == pos2.x + 1 && pos1.y == pos2.y) { canMove1.left = false; canMove2.right = false; }	// p1 is to the left of p2.
+
+	p1->setCanMove(canMove1);
+	p2->setCanMove(canMove2);
+}
+
+int Play::explodeMap(Vector2 center) {
+
+	int cellCount = 0;
 	map.destroyCell(center);
 	if (map.getCell({ center.x, center.y - 1 }).type == Celltype::DESTRUCTIBLE) {	// [x, y-1]
-		map.destroyCell({ center.x, center.y - 1});
+		map.destroyCell({ center.x, center.y - 1 });
+		cellCount++;
 	}
-	if (map.getCell({ center.x, center.y - 2 }).type == Celltype::DESTRUCTIBLE) {	// [x, y-2]
-		map.destroyCell({ center.x, center.y - 2});
+	else if (map.getCell({ center.x, center.y - 2 }).type == Celltype::DESTRUCTIBLE) {	// [x, y-2]
+		if (map.getCell({ center.x, center.y - 1 }).type == Celltype::FLOOR) {
+			map.destroyCell({ center.x, center.y - 2 });
+			cellCount++;
+		}
 	}
 	if (map.getCell({ center.x, center.y + 1 }).type == Celltype::DESTRUCTIBLE) {	// [x, y+1]
-		map.destroyCell({ center.x, center.y + 1});
+		map.destroyCell({ center.x, center.y + 1 });
+		cellCount++;
 	}
-	if (map.getCell({ center.x, center.y + 2 }).type == Celltype::DESTRUCTIBLE) {	// [x, y+2]
-		map.destroyCell({ center.x, center.y + 2});
+	else if (map.getCell({ center.x, center.y + 2 }).type == Celltype::DESTRUCTIBLE) {	// [x, y+2]
+		if (map.getCell({ center.x, center.y + 1 }).type == Celltype::FLOOR) {
+			map.destroyCell({ center.x, center.y + 2 });
+			cellCount++;
+		}
 	}
 	if (map.getCell({ center.x + 1, center.y }).type == Celltype::DESTRUCTIBLE) {	// [x+1, y]
 		map.destroyCell({ center.x + 1, center.y });
+		cellCount++;
 	}
-	if (map.getCell({ center.x + 2, center.y }).type == Celltype::DESTRUCTIBLE) {	// [x+2, y]
-		map.destroyCell({ center.x + 2, center.y });
+	else if (map.getCell({ center.x + 2, center.y }).type == Celltype::DESTRUCTIBLE) {	// [x+2, y]
+		if (map.getCell({ center.x + 1, center.y }).type == Celltype::FLOOR) {
+			map.destroyCell({ center.x + 2, center.y });
+			cellCount++;
+		}
 	}
 	if (map.getCell({ center.x - 1, center.y }).type == Celltype::DESTRUCTIBLE) {	// [x-1, y]
 		map.destroyCell({ center.x - 1, center.y });
+		cellCount++;
 	}
-	if (map.getCell({ center.x - 2, center.y }).type == Celltype::DESTRUCTIBLE) {	// [x-2, y]
-		map.destroyCell({ center.x - 2, center.y });
+	else if (map.getCell({ center.x - 2, center.y }).type == Celltype::DESTRUCTIBLE) {	// [x-2, y]
+		if (map.getCell({ center.x - 1, center.y }).type == Celltype::FLOOR) {
+			map.destroyCell({ center.x - 2, center.y });
+			cellCount++;
+		}
 	}
+
+	Vector2 p = player1.getGridPos();
+	if (center.x == p.x && center.y == p.y) { player2.addPoints(DEATH_POINTS); }
+	if (center.x + 1 == p.x && center.y == p.y) { player2.addPoints(DEATH_POINTS); }
+	if (center.x + 2 == p.x && center.y == p.y) { player2.addPoints(DEATH_POINTS); }
+	if (center.x == p.x && center.y + 1 == p.y) { player2.addPoints(DEATH_POINTS); }
+	if (center.x == p.x && center.y + 2 == p.y) { player2.addPoints(DEATH_POINTS); }
+	if (center.x == p.x && center.y - 1 == p.y) { player2.addPoints(DEATH_POINTS); }
+	if (center.x == p.x && center.y - 2 == p.y) { player2.addPoints(DEATH_POINTS); }
+	if (center.x - 1 == p.x && center.y == p.y) { player2.addPoints(DEATH_POINTS); }
+	if (center.x - 2 == p.x && center.y == p.y) { player2.addPoints(DEATH_POINTS); }
+
+	p = player2.getGridPos();
+	if (center.x == p.x && center.y == p.y) { player1.addPoints(DEATH_POINTS); }
+	if (center.x + 1 == p.x && center.y == p.y) { player1.addPoints(DEATH_POINTS); }
+	if (center.x == p.x && center.y + 1 == p.y) { player1.addPoints(DEATH_POINTS); }
+	if (center.x == p.x && center.y - 1 == p.y) { player1.addPoints(DEATH_POINTS); }
+	if (center.x - 1 == p.x && center.y == p.y) { player1.addPoints(DEATH_POINTS); }
+
+	return cellCount;
+}
+
+BombRange Play::explodeRange(Vector2 center) {
+	BombRange range = {2,2,2,2};
+
+	// Calculating range:
+	if (map.getCell({ center.x, center.y - 1 }).type != Celltype::FLOOR) {	// [x, y-1]
+		range.up = 0;
+	}
+	if (map.getCell({ center.x, center.y - 2 }).type != Celltype::FLOOR) {	// [x, y-2]
+		range.up = 1;
+	}
+	if (map.getCell({ center.x, center.y + 1 }).type != Celltype::FLOOR) {	// [x, y+1]
+		range.down = 0;
+	}
+	if (map.getCell({ center.x, center.y + 2 }).type != Celltype::FLOOR) {	// [x, y+2]
+		range.down = 1;
+	}
+	if (map.getCell({ center.x + 1, center.y }).type != Celltype::FLOOR) {	// [x+1, y]
+		range.right = 0;
+	}
+	if (map.getCell({ center.x + 2, center.y }).type != Celltype::FLOOR) {	// [x+2, y]
+		range.right = 1;
+	}
+	if (map.getCell({ center.x - 1, center.y }).type != Celltype::FLOOR) {	// [x-1, y]
+		range.left = 0;
+	}
+	if (map.getCell({ center.x - 2, center.y }).type != Celltype::FLOOR) {	// [x-2, y]
+		range.left = 1;
+	}
+	return range;
 }
 
 void Play::Update() {
@@ -155,20 +224,43 @@ void Play::Update() {
 	player1.setCanMove(CanPlayerMove(player1));
 	player2.setCanMove(CanPlayerMove(player2));
 
-	//PlayerCollision(player1, player2);
+	PlayerCollision(&player1, &player2);
 
 	player1.Update();
 	player2.Update();
+
 	if (map.getCell(player1.getGridPos()).type == Celltype::FLOOR) {
 		if (player1.getPlayerState() == BOMB) InitBomb(player1);
 	}
 	if (map.getCell(player2.getGridPos()).type == Celltype::FLOOR) {
 		if (player2.getPlayerState() == BOMB) InitBomb(player2);
 	}
+
 	Bomb tmp = player1.getBomb();
-	if (tmp.hasExploded()) { explodeMap(tmp.getGridPos()); }
+	if (tmp.getState() == BombState::ACTIVE) {
+		BombRange rng = explodeRange(tmp.getGridPos());
+		player1.setBombRange(rng);
+		if (tmp.hasExploded()) {
+			player1.addPoints(explodeMap(tmp.getGridPos()) * BLOCK_POINTS);
+		}
+	}
 	tmp = player2.getBomb();
-	if (tmp.hasExploded()) { explodeMap(tmp.getGridPos()); }
+	if (tmp.getState() == BombState::ACTIVE) {
+		BombRange rng = explodeRange(tmp.getGridPos());
+		player2.setBombRange(rng);
+		if (tmp.hasExploded()) {
+			player2.addPoints(explodeMap(tmp.getGridPos()) * BLOCK_POINTS);
+		}
+	}
+	/*
+	BombRange tmpRange = { 0,0,0,0 };
+	player2.setBombRange(tmpRange);
+	if (tmp.hasExploded()) { player1.addPoints(explodeMap(tmp.getGridPos()) * BLOCK_POINTS); tmpRange = explodeRange(tmp.getGridPos()); }
+	if (tmp.getState() == BombState::ACTIVE) { player1.setBombRange(tmpRange); }
+	tmp = player2.getBomb();
+	player2.setBombRange(tmpRange);
+	if (tmp.hasExploded()) { player2.addPoints(explodeMap(tmp.getGridPos()) * BLOCK_POINTS); tmpRange = explodeRange(tmp.getGridPos()); }
+	//if (tmp.getState() == BombState::ACTIVE) { player2.setBombRange(tmpRange); }*/
 }
 
 void Play::Draw() {

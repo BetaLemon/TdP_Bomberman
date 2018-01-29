@@ -18,6 +18,9 @@
 #define PLAYER_WIDTH 48
 #define PLAYER_HEIGHT 48
 
+#define BLOCK_POINTS 15
+#define DEATH_POINTS 100
+
 const std::string MENU_BG = "MENU_BG";
 const std::string PLAY_BG = "PLAY_BG";
 const std::string PLAYER1_SPRITE = "PLAYER1_SPRITE";

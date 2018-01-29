@@ -4,6 +4,8 @@
 
 enum BombState{ACTIVE,WAITING};
 
+struct BombRange { int up, down, left, right; };	// 0 just center. 1 means +1 from center. 2 means +2 from center (in the corresponding directions).
+
 class Bomb {
 	private:
 		Vector2 pos;
@@ -13,6 +15,7 @@ class Bomb {
 		Vector2 bomb_s;
 		Vector2 explos_s;
 		int explosionStage;
+		BombRange range;
 		//sprite
 	public:
 		Bomb();
@@ -24,4 +27,5 @@ class Bomb {
 		void setState(BombState _state);
 		BombState getState() { return state; }
 		bool hasExploded();
+		void setRange(BombRange _range);
 };

@@ -43,6 +43,7 @@ public:
 	PlayerMoveAllow getCanMove() { return canMove; }
 
 	Bomb getBomb() { return bomb; }
+	void setBombRange(BombRange _range);
 		
 	//setPowerUp();
 

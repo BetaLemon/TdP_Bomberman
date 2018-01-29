@@ -9,6 +9,7 @@
 #include "rapidxml_print.hpp"
 #include "rapidxml_utils.hpp"
 #include <sstream>
+#include <iostream>
 
 class Play : public Scene {
 private:
@@ -18,7 +19,9 @@ private:
 
 	PlayerMoveAllow CanPlayerMove(Player _player);
 	void InitBomb(Player _player);
-	void explodeMap(Vector2 center);
+	int explodeMap(Vector2 center);
+	BombRange explodeRange(Vector2 center);
+	void PlayerCollision(Player* p1, Player* p2);
 	//map
 	//pointsFont
 	//lifeSprite

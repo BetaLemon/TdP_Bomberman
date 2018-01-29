@@ -4,7 +4,7 @@
 #include "Types.h"
 #include "Renderer.h"
 
-enum Celltype {FIXED,DESTRUCTIBLE,SKATES,HELMET,FLOOR};
+enum Celltype {FIXED,DESTRUCTIBLE,DESTROYING,SKATES,HELMET,FLOOR};
 struct Cell {
 	//Sprite
 	Celltype type;
