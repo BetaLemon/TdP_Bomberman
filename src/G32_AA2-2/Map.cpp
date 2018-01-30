@@ -4,7 +4,6 @@
 #include "rapidxml_print.hpp"
 #include "rapidxml_utils.hpp"
 #include <sstream>
-
 #include <iostream>
 
 Map::Map() {
@@ -42,8 +41,8 @@ Map::Map(int level) {
 			// destructible
 		currentCell = lvl->first_node("Destructible");
 		for (rapidxml::xml_node<> *wallNode = currentCell->first_node("Wall"); wallNode; wallNode = wallNode->next_sibling()) {			
-			int i = atoi(wallNode->first_attribute("i")->value());
-			int j = atoi(wallNode->first_attribute("j")->value());
+			int j = atoi(wallNode->first_attribute("i")->value());
+			int i = atoi(wallNode->first_attribute("j")->value());
 			grid[i][j] = Cell{ Celltype::DESTRUCTIBLE, {i,j} };
 		}
 			// fixed
@@ -68,15 +67,15 @@ Map::Map(int level) {
 		// destructible
 			currentCell = lvl->first_node("Destructible");
 		for (rapidxml::xml_node<> *wallNode = currentCell->first_node("Wall"); wallNode; wallNode = wallNode->next_sibling()) {
-			int i = atoi(wallNode->first_attribute("i")->value());
-			int j = atoi(wallNode->first_attribute("j")->value());
+			int j = atoi(wallNode->first_attribute("i")->value());
+			int i = atoi(wallNode->first_attribute("j")->value());
 			grid[i][j] = Cell{ Celltype::DESTRUCTIBLE,{ i,j } };
 		}
 			// fixed
 		currentCell = lvl->first_node("Fixed");
 		for (rapidxml::xml_node<> *wallNode = currentCell->first_node("Wall"); wallNode; wallNode = wallNode->next_sibling()) {
-			int i = atoi(wallNode->first_attribute("i")->value());
-			int j = atoi(wallNode->first_attribute("j")->value());
+			int j = atoi(wallNode->first_attribute("i")->value());
+			int i = atoi(wallNode->first_attribute("j")->value());
 			grid[i][j] = Cell{ Celltype::FIXED,{ i,j } };
 		}
 		break;
@@ -114,6 +113,12 @@ void Map::Draw() {
 			case Celltype::DESTRUCTIBLE:
 				Renderer::Instance()->PushSprite(PLAY_CELL_SPRITE, { 1 * spriteSize.x, 0,spriteSize.x,spriteSize.y }, { i*CELL_WIDTH, j*CELL_HEIGHT + HUD_HEIGHT, CELL_WIDTH, CELL_HEIGHT });
 				break;
+			case Celltype::SKATES:
+				Renderer::Instance()->PushSprite(PLAY_CELL_SPRITE, { 1 * spriteSize.x, 1* spriteSize.y, spriteSize.x,spriteSize.y }, { i*CELL_WIDTH, j*CELL_HEIGHT + HUD_HEIGHT, CELL_WIDTH, CELL_HEIGHT });
+				break;
+			case Celltype::HELMET:
+				Renderer::Instance()->PushSprite(PLAY_CELL_SPRITE, { 2 * spriteSize.x, 1* spriteSize.y ,spriteSize.x,spriteSize.y }, { i*CELL_WIDTH, j*CELL_HEIGHT + HUD_HEIGHT, CELL_WIDTH, CELL_HEIGHT });
+				break;
 			default:;
 			}
 		}
@@ -126,4 +131,18 @@ Vector2 Map::getCellPixPos(Vector2 pos) {
 
 void Map::destroyCell(Vector2 pos) {
 	grid[pos.x][pos.y].type = Celltype::FLOOR;
+	if (rand() % 100 < 20) {
+		if (rand() % 100 >= 50) {
+			grid[pos.x][pos.y].type = Celltype::HELMET;
+		}
+		else{ grid[pos.x][pos.y].type = Celltype::SKATES; }
+	}
+}
+void Map::destroyCell(Vector2 pos, bool absolute) {
+	if (absolute) {
+		grid[pos.x][pos.y].type = Celltype::FLOOR;
+	}
+	else {
+		destroyCell(pos);
+	}
 }

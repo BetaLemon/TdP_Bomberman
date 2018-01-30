@@ -52,7 +52,17 @@ void Player::Draw() {
 }
 
 void Player::reduceLife(int amount) {
-	life -= amount;
+	if (powerup != PowerUp::HELMET) {
+		life -= amount;
+	}
+}
+
+void Player::setPowerUp(PowerUp pw) {
+	powerup = pw;
+	powTime = 10 * 1000; // 10 segundos.
+	clock.SDLDeltaTicks = SDL_GetTicks();
+	clock.delta = 0;
+	clock.prevTickTime = 0;
 }
 
 //Cambiar el state del player segun un input recibido
@@ -117,6 +127,25 @@ Vector2 Player::getGridPos() {
 }
 
 void Player::Update() {
+	clock.tick();
+	switch (powerup) {
+	case PowerUp::HELMET:
+		powTime -= clock.delta;
+		break;
+	case PowerUp::SKATES:
+		powTime -= clock.delta;
+		speed.x = CELL_WIDTH * 2;
+		speed.y = CELL_HEIGHT * 2;
+		break;
+	case PowerUp::NO_POW:
+		speed.x = CELL_WIDTH;
+		speed.y = CELL_HEIGHT;
+		break;
+	}
+
+	std::cout << floor(powTime/1000) << std::endl;
+	if (powTime < 0) { powerup = PowerUp::NO_POW; }
+
 	//Mover el Personaje e instanciar las bombas
 	switch (state) {
 		case UP:

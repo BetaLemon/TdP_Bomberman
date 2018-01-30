@@ -20,8 +20,8 @@ Play::Play(int level) {
 		player2 = Player(1, {(CELL_WIDTH * 11) - CELL_WIDTH / 2, (CELL_HEIGHT * 4) + HUD_HEIGHT - CELL_HEIGHT / 2});
 		break;
 	case 2:
-		player1 = Player(0, { 576,120 });
-		player2 = Player(1, { 576,200 });
+		player1 = Player(0, { (CELL_WIDTH * 11) - CELL_WIDTH / 2, (CELL_HEIGHT * 2) + HUD_HEIGHT - CELL_HEIGHT / 2 });
+		player2 = Player(1, { (CELL_WIDTH * 11) - CELL_WIDTH / 2, (CELL_HEIGHT * 4) + HUD_HEIGHT - CELL_HEIGHT / 2 });
 		break;
 	default:;
 	}
@@ -44,7 +44,7 @@ Play::Play(int level) {
 		music.AddSoundtrack(PLAY_SOUND, PATH_AU + "game_theme.mp3");
 		music.Play(PLAY_SOUND);
 	}
-
+	clock.SDLDeltaTicks = SDL_GetTicks();
 }
 
 Play::~Play() {
@@ -90,16 +90,16 @@ PlayerMoveAllow Play::CanPlayerMove(Player _player) {
 	left.pos = map.getCellPixPos(left.pos);
 	right.pos = map.getCellPixPos(right.pos);
 
-	if (up.type == Celltype::FIXED || up.type == Celltype::DESTRUCTIBLE) {
+	if (up.type == Celltype::FIXED || up.type == Celltype::DESTRUCTIBLE || player.y < 2) {
 		canMove.up = false;
 	}
-	if (down.type == Celltype::FIXED || down.type == Celltype::DESTRUCTIBLE) {
+	if (down.type == Celltype::FIXED || down.type == Celltype::DESTRUCTIBLE || player.y > GRID_HEIGHT-3) {
 		canMove.down = false;
 	}
-	if (left.type == Celltype::FIXED || left.type == Celltype::DESTRUCTIBLE) {
+	if (left.type == Celltype::FIXED || left.type == Celltype::DESTRUCTIBLE || player.x < 2) {
 		canMove.left = false;
 	}
-	if (right.type == Celltype::FIXED || right.type == Celltype::DESTRUCTIBLE) {
+	if (right.type == Celltype::FIXED || right.type == Celltype::DESTRUCTIBLE || player.x > GRID_WIDTH-3) {
 		canMove.right = false;
 	}
 
@@ -168,26 +168,30 @@ int Play::explodeMap(Vector2 center) {
 	}
 
 	Vector2 p = player1.getGridPos();
-	if (center.x == p.x && center.y == p.y) { player2.addPoints(DEATH_POINTS); player1.reduceLife(1); }
-	if (center.x + 1 == p.x && center.y == p.y) { player2.addPoints(DEATH_POINTS); player1.reduceLife(1); }
-	if (center.x + 2 == p.x && center.y == p.y) { player2.addPoints(DEATH_POINTS); player1.reduceLife(1); }
-	if (center.x == p.x && center.y + 1 == p.y) { player2.addPoints(DEATH_POINTS); player1.reduceLife(1); }
-	if (center.x == p.x && center.y + 2 == p.y) { player2.addPoints(DEATH_POINTS); player1.reduceLife(1); }
-	if (center.x == p.x && center.y - 1 == p.y) { player2.addPoints(DEATH_POINTS); player1.reduceLife(1); }
-	if (center.x == p.x && center.y - 2 == p.y) { player2.addPoints(DEATH_POINTS); player1.reduceLife(1); }
-	if (center.x - 1 == p.x && center.y == p.y) { player2.addPoints(DEATH_POINTS); player1.reduceLife(1); }
-	if (center.x - 2 == p.x && center.y == p.y) { player2.addPoints(DEATH_POINTS); player1.reduceLife(1); }
+	if (player1.getPowerUp() != PowerUp::HELMET) {
+		if (center.x == p.x && center.y == p.y) { player2.addPoints(DEATH_POINTS); player1.reduceLife(1); }
+		if (center.x + 1 == p.x && center.y == p.y) { player2.addPoints(DEATH_POINTS); player1.reduceLife(1); }
+		if (center.x + 2 == p.x && center.y == p.y) { player2.addPoints(DEATH_POINTS); player1.reduceLife(1); }
+		if (center.x == p.x && center.y + 1 == p.y) { player2.addPoints(DEATH_POINTS); player1.reduceLife(1); }
+		if (center.x == p.x && center.y + 2 == p.y) { player2.addPoints(DEATH_POINTS); player1.reduceLife(1); }
+		if (center.x == p.x && center.y - 1 == p.y) { player2.addPoints(DEATH_POINTS); player1.reduceLife(1); }
+		if (center.x == p.x && center.y - 2 == p.y) { player2.addPoints(DEATH_POINTS); player1.reduceLife(1); }
+		if (center.x - 1 == p.x && center.y == p.y) { player2.addPoints(DEATH_POINTS); player1.reduceLife(1); }
+		if (center.x - 2 == p.x && center.y == p.y) { player2.addPoints(DEATH_POINTS); player1.reduceLife(1); }
+	}
 
 	p = player2.getGridPos();
-	if (center.x == p.x && center.y == p.y) { player1.addPoints(DEATH_POINTS); player2.reduceLife(1); }
-	if (center.x + 1 == p.x && center.y == p.y) { player1.addPoints(DEATH_POINTS); player2.reduceLife(1); }
-	if (center.x + 2 == p.x && center.y == p.y) { player1.addPoints(DEATH_POINTS); player2.reduceLife(1); }
-	if (center.x == p.x && center.y + 1 == p.y) { player1.addPoints(DEATH_POINTS); player2.reduceLife(1); }
-	if (center.x == p.x && center.y + 2 == p.y) { player1.addPoints(DEATH_POINTS); player2.reduceLife(1); }
-	if (center.x == p.x && center.y - 1 == p.y) { player1.addPoints(DEATH_POINTS); player2.reduceLife(1); }
-	if (center.x == p.x && center.y - 2 == p.y) { player1.addPoints(DEATH_POINTS); player2.reduceLife(1); }
-	if (center.x - 1 == p.x && center.y == p.y) { player1.addPoints(DEATH_POINTS); player2.reduceLife(1); }
-	if (center.x - 2 == p.x && center.y == p.y) { player1.addPoints(DEATH_POINTS); player2.reduceLife(1); }
+	if (player2.getPowerUp() != PowerUp::HELMET) {
+		if (center.x == p.x && center.y == p.y) { player1.addPoints(DEATH_POINTS); player2.reduceLife(1); }
+		if (center.x + 1 == p.x && center.y == p.y) { player1.addPoints(DEATH_POINTS); player2.reduceLife(1); }
+		if (center.x + 2 == p.x && center.y == p.y) { player1.addPoints(DEATH_POINTS); player2.reduceLife(1); }
+		if (center.x == p.x && center.y + 1 == p.y) { player1.addPoints(DEATH_POINTS); player2.reduceLife(1); }
+		if (center.x == p.x && center.y + 2 == p.y) { player1.addPoints(DEATH_POINTS); player2.reduceLife(1); }
+		if (center.x == p.x && center.y - 1 == p.y) { player1.addPoints(DEATH_POINTS); player2.reduceLife(1); }
+		if (center.x == p.x && center.y - 2 == p.y) { player1.addPoints(DEATH_POINTS); player2.reduceLife(1); }
+		if (center.x - 1 == p.x && center.y == p.y) { player1.addPoints(DEATH_POINTS); player2.reduceLife(1); }
+		if (center.x - 2 == p.x && center.y == p.y) { player1.addPoints(DEATH_POINTS); player2.reduceLife(1); }
+	}
 
 	return cellCount;
 }
@@ -247,6 +251,25 @@ void Play::Update() {
 	player2.setCanMove(CanPlayerMove(player2));
 
 	PlayerCollision(&player1, &player2);
+
+	// Power-up player1:
+	if (map.getCell(player1.getGridPos()).type == Celltype::HELMET) {
+		player1.setPowerUp(PowerUp::HELMET);
+		map.destroyCell(player1.getGridPos(), true);
+	}
+	else if (map.getCell(player1.getGridPos()).type == Celltype::SKATES) {
+		player1.setPowerUp(PowerUp::SKATES);
+		map.destroyCell(player1.getGridPos(), true);
+	}
+	// Power-up player2:
+	if (map.getCell(player2.getGridPos()).type == Celltype::HELMET) {
+		player2.setPowerUp(PowerUp::HELMET);
+		map.destroyCell(player2.getGridPos(), true);
+	}
+	else if (map.getCell(player2.getGridPos()).type == Celltype::SKATES) {
+		player2.setPowerUp(PowerUp::SKATES);
+		map.destroyCell(player2.getGridPos(), true);
+	}
 
 	player1.Update();
 	player2.Update();

@@ -37,8 +37,9 @@
 	struct Clock {
 		int prevTickTime = 0;
 		int delta = 0;
+		int SDLDeltaTicks = 0;
 		void tick() {
-			int tickTime = SDL_GetTicks();
+			int tickTime = SDL_GetTicks() - SDLDeltaTicks;
 			delta = tickTime - prevTickTime;
 			prevTickTime = tickTime;
 		}

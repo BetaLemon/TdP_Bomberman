@@ -24,5 +24,6 @@ public:
 	void Draw();
  	Cell getCell(Vector2 pos) { return grid[pos.x][pos.y]; }
 	void destroyCell(Vector2 pos);
+	void destroyCell(Vector2 pos, bool absolute);
 	Vector2 getCellPixPos(Vector2 pos);
 };
