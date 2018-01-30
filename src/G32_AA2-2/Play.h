@@ -18,14 +18,16 @@ private:
 	Map map;
 	Clock clock;
 	int roundTime;
+	int winnerScore;
+	
+	//Funciones:
 	PlayerMoveAllow CanPlayerMove(Player _player);
 	void InitBomb(Player _player);
 	int explodeMap(Vector2 center);
 	BombRange explodeRange(Vector2 center);
 	void PlayerCollision(Player* p1, Player* p2);
-	//map
-	//pointsFont
-	//lifeSprite
+	void WriteBinary(std::string path);
+
 public:
 	Play();
 	Play(int level);

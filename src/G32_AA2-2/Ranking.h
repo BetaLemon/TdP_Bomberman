@@ -17,17 +17,19 @@ private:
 	bool writeMode;
 	Rect mouseDown;
 	Button backButton;
+	int playScore;
+	std::string playerName;
+	bool finishedInput;
+
 	bool checkClick(Rect button, int x, int y);
-	//records;
-	//mode;
+	void FillEmptyBinary(std::string path);
 	void ReadBinary(std::string path);
 	void WriteBinary(std::string path);
+	int getPlayScore(std::string path);
 public:
 	Ranking(bool mode);
 	~Ranking();
 	void EventsHandler() override;
 	void Update() override;
 	void Draw() override;
-	void Save();
-	void Load();
 };

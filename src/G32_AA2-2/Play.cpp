@@ -227,6 +227,19 @@ void Play::Update() {
 	clock.tick();
 	roundTime += clock.delta;
 	if (roundTime >= (ROUND_DURATION * 1000)) {
+		winnerScore = player1.getPoints();
+		if (player2.getPoints() > winnerScore) { winnerScore = player2.getPoints(); }
+		WriteBinary(PATH_FILES + "tmp.bin");
+		sceneState = SceneState::GOTO_SETSCORE;
+	}
+	if(player1.getLife() < 1){
+		winnerScore = player2.getPoints();
+		WriteBinary(PATH_FILES + "tmp.bin");
+		sceneState = SceneState::GOTO_SETSCORE;
+	}
+	if(player2.getLife() < 1) {
+		winnerScore = player1.getPoints();
+		WriteBinary(PATH_FILES + "tmp.bin");
 		sceneState = SceneState::GOTO_SETSCORE;
 	}
 
@@ -317,8 +330,6 @@ void Play::Draw() {
 	Renderer::Instance()->Render();
 }
 
-
-
 void Play::InitBomb(Player _player) {
 
 	if (_player.getBomb().getState() == WAITING) {
@@ -357,4 +368,10 @@ void Play::InitBomb(Player _player) {
 	else if (_player.getBomb().getState() == ACTIVE) {
 		_player.setPlayerStateToNONE();
 	}
+}
+
+void Play::WriteBinary(std::string path) {
+	std::ofstream binFileOUT(path, std::ios::out | std::ios::binary);
+	binFileOUT.write(reinterpret_cast<char*>(&winnerScore), sizeof(int));
+	binFileOUT.close();
 }
